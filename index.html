@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Franco Parodi — Personal Website</title>
+  <meta name="description" content="Sito personale di Franco Parodi.">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
+      background: #0b0d10;
+      color: #f5f5f5;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: 0 auto;
+    }
+
+    /* NAVBAR */
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(11, 13, 16, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-content {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      font-size: 0.95rem;
+      color: #b5b5b5;
+    }
+
+    .nav-links a {
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 0 60px;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .eyebrow {
+      color: #8f96a3;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      margin-bottom: 30px;
+    }
+
+    .hero-description {
+      max-width: 650px;
+      color: #aeb4be;
+      font-size: 1.25rem;
+      margin-bottom: 35px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 21px;
+      border-radius: 8px;
+      border: 1px solid #30343b;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .button.primary {
+      background: white;
+      color: #0b0d10;
+      border-color: white;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button.secondary:hover {
+      background: #171a1f;
+    }
+
+    /* SECTIONS */
+
+    section {
+      padding: 110px 0;
+      border-top: 1px solid #1c2026;
+    }
+
+    .section-label {
+      color: #777f8b;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 0.8rem;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: -0.04em;
+      margin-bottom: 25px;
+    }
+
+    .about-text {
+      max-width: 750px;
+      color: #b5bac3;
+      font-size: 1.15rem;
+    }
+
+    /* PROJECTS */
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 45px;
+    }
+
+    .project {
+      padding: 30px;
+      border: 1px solid #242830;
+      border-radius: 14px;
+      background: #101318;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .project:hover {
+      transform: translateY(-5px);
+      border-color: #444a54;
+    }
+
+    .project-number {
+      color: #666e7a;
+      font-size: 0.85rem;
+      margin-bottom: 35px;
+    }
+
+    .project h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .project p {
+      color: #9299a4;
+    }
+
+    /* SKILLS */
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 35px;
+    }
+
+    .skill {
+      padding: 9px 15px;
+      border: 1px solid #292e36;
+      border-radius: 100px;
+      color: #b5bac3;
+      font-size: 0.9rem;
+    }
+
+    /* CONTACT */
+
+    .contact {
+      max-width: 750px;
+    }
+
+    .contact-text {
+      color: #aeb4be;
+      font-size: 1.15rem;
+      margin-bottom: 30px;
+    }
+
+    .email {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      border-bottom: 1px solid #555;
+      padding-bottom: 5px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 35px 0;
+      border-top: 1px solid #1c2026;
+      color: #6e7580;
+      font-size: 0.85rem;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        min-height: 90vh;
+      }
+
+      h1 {
+        font-size: 4rem;
+      }
+
+      .hero-description {
+        font-size: 1.05rem;
+      }
+
+      section {
+        padding: 80px 0;
+      }
+
+      .projects {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+
+  <nav>
+    <div class="container nav-content">
+
+      <a href="#" class="logo">Franco Parodi</a>
+
+      <ul class="nav-links">
+        <li><a href="#about">Chi sono</a></li>
+        <li><a href="#projects">Progetti</a></li>
+        <li><a href="#skills">Competenze</a></li>
+        <li><a href="#contact">Contatti</a></li>
+      </ul>
+
+    </div>
+  </nav>
+
+
+  <!-- HERO -->
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+
+        <div class="hero-content">
+
+          <div class="eyebrow">
+            Benvenuto
+          </div>
+
+          <h1>
+            Franco<br>
+            Parodi.
+          </h1>
+
+          <p class="hero-description">
+            [Una breve frase che descrive chi sei e cosa fai.
+            Per esempio: "Designer, developer e appassionato
+            di tecnologia."]
+          </p>
+
+          <div class="buttons">
+            <a href="#contact" class="button primary">
+              Contattami
+            </a>
+
+            <a href="#projects" class="button secondary">
+              I miei progetti
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section id="about">
+      <div class="container">
+
+        <div class="section-label">
+          01 — Chi sono
+        </div>
+
+        <h2>
+          Piacere, Franco.
+        </h2>
+
+        <p class="about-text">
+          [Scrivi qui una breve presentazione.
+          Puoi raccontare chi sei, di cosa ti occupi,
+          cosa ti appassiona e su cosa stai lavorando.]
+
+          <br><br>
+
+          [Puoi aggiungere una seconda parte con qualche
+          informazione più personale o professionale.]
+        </p>
+
+      </div>
+    </section>
+
+
+    <!-- PROJECTS -->
+
+    <section id="projects">
+      <div class="container">
+
+        <div class="section-label">
+          02 — Progetti
+        </div>
+
+        <h2>
+          Cose che ho fatto.
+        </h2>
+
+        <div class="projects">
+
+          <article class="project">
+            <div class="project-number">01</div>
+
+            <h3>
+              Progetto Uno
+            </h3>
+
+            <p>
+              [Descrizione breve del progetto,
+              del lavoro svolto e del risultato.]
+            </p>
+          </article>
+
+
+          <article class="project">
+            <div class="project-number">02</div>
+
+            <h3>
+              Progetto Due
+            </h3>
+
+            <p>
+              [Descrizione breve del progetto,
+              del lavoro svolto e del risultato.]
+            </p>
+          </article>
+
+
+          <article class="project">
+            <div class="project-number">03</div>
+
+            <h3>
+              Progetto Tre
+            </h3>
+
+            <p>
+              [Descrizione breve del progetto,
+              del lavoro svolto e del risultato.]
+            </p>
+          </article>
+
+
+          <article class="project">
+            <div class="project-number">04</div>
+
+            <h3>
+              Progetto Quattro
+            </h3>
+
+            <p>
+              [Descrizione breve del progetto,
+              del lavoro svolto e del risultato.]
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- SKILLS -->
+
+    <section id="skills">
+      <div class="container">
+
+        <div class="section-label">
+          03 — Competenze
+        </div>
+
+        <h2>
+          Cosa so fare.
+        </h2>
+
+        <div class="skills">
+
+          <span class="skill">[Competenza 1]</span>
+          <span class="skill">[Competenza 2]</span>
+          <span class="skill">[Competenza 3]</span>
+          <span class="skill">[Competenza 4]</span>
+          <span class="skill">[Competenza 5]</span>
+          <span class="skill">[Competenza 6]</span>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- CONTACT -->
+
+    <section id="contact">
+      <div class="container">
+
+        <div class="contact">
+
+          <div class="section-label">
+            04 — Contatti
+          </div>
+
+          <h2>
+            Parliamone.
+          </h2>
+
+          <p class="contact-text">
+            Se vuoi contattarmi, scrivimi.
+            Sarò felice di sentirti.
+          </p>
+
+          <a
+            href="mailto:tuamail@example.com"
+            class="email">
+            tuamail@example.com
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+    <div class="container footer-content">
+
+      <span>
+        © 2026 Franco Parodi
+      </span>
+
+      <span>
+        <a href="https://github.com/francoparodi"
+           target="_blank"
+           rel="noopener">
+          GitHub
+        </a>
+      </span>
+
+    </div>
+  </footer>
+
+</body>
+</html>
