@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Franco Parodi — Software Analyst and Developer</title>
+    <title>Franco Parodi — Analista Sviluppatore Software</title>
     <meta name="description"
-        content="Personal portfolio of Franco Parodi, software analyst and developer with many years of experience in desktop and web applications." />
+        content="Portfolio personale di Franco Parodi, analista sviluppatore software con esperienza pluriennale su applicazioni desktop e web." />
 
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="apple-touch-icon" href="favicon.svg" />
@@ -43,6 +43,11 @@
         html {
             scroll-behavior: smooth;
             -webkit-text-size-adjust: 100%;
+
+            /* Scroll "a scatto": arrivati vicino a una sezione, la pagina si
+               posiziona da sola. "proximity" e non "mandatory", cosi' le
+               sezioni piu' alte dello schermo restano libere di scorrere. */
+            scroll-snap-type: y proximity;
         }
 
         body {
@@ -81,6 +86,7 @@
             min-height: 100svh;
             display: flex;
             align-items: center;
+            scroll-snap-align: center;
         }
 
         .hero {
@@ -100,6 +106,13 @@
             letter-spacing: -2px;
             margin-bottom: 12px;
             overflow-wrap: break-word;
+        }
+
+        /* Mentre il titolo si scrive il cursore resta fisso: lampeggia
+           solo a digitazione finita, come in un terminale vero. */
+        h1.typing .caret {
+            animation: none;
+            opacity: 1;
         }
 
         /* Cursore lampeggiante di fianco al titolo, come in un terminale. */
@@ -322,7 +335,7 @@
 
         section {
             padding: 100px 0;
-            scroll-margin-top: 60px;
+            scroll-snap-align: center;
         }
 
         .section-title {
@@ -611,6 +624,10 @@
 
         footer {
             text-align: center;
+
+            /* Punto di aggancio finale: senza, lo scatto sull'ultima sezione
+               rimbalzerebbe indietro e il fondo pagina resterebbe tagliato. */
+            scroll-snap-align: end;
             padding: 40px 20px;
             color: var(--text-light);
             font-size: 12px;
@@ -784,6 +801,7 @@
 
             html {
                 scroll-behavior: auto;
+                scroll-snap-type: none;
             }
 
             * {
@@ -813,17 +831,17 @@
 
     <nav id="site-nav">
         <ul>
-            <li><a href="https://francoparodi.github.io/" data-i18n="nav.home">00. Home</a></li>
-            <li><a href="#about" data-i18n="nav.about">01. About</a></li>
-            <li><a href="#skills" data-i18n="nav.skills">02. Skills</a></li>
-            <li><a href="#experience" data-i18n="nav.experience">03. Experience</a></li>
-            <li><a href="#projects" data-i18n="nav.projects">04. Projects</a></li>
-            <li><a href="#contact" data-i18n="nav.contact">05. Contact</a></li>
+            <li><a href="https://francoparodi.github.io/" data-i18n="nav.home">127.0.0.1</a></li>
+            <li><a href="#about" data-i18n="nav.about">Chi sono</a></li>
+            <li><a href="#skills" data-i18n="nav.skills">Competenze</a></li>
+            <li><a href="#experience" data-i18n="nav.experience">Esperienze</a></li>
+            <li><a href="#projects" data-i18n="nav.projects">Progetti</a></li>
+            <li><a href="#contact" data-i18n="nav.contact">Contatti</a></li>
 
             <li class="lang-switch">
-                <button type="button" data-lang-btn="it" aria-pressed="false" lang="it">IT</button>
+                <button type="button" data-lang-btn="it" aria-pressed="true" lang="it">IT</button>
                 <span class="sep" aria-hidden="true">/</span>
-                <button type="button" data-lang-btn="en" aria-pressed="true" lang="en">EN</button>
+                <button type="button" data-lang-btn="en" aria-pressed="false" lang="en">EN</button>
             </li>
         </ul>
     </nav>
@@ -836,11 +854,11 @@
         <header class="container">
             <div class="hero">
 
-                <h1>:/franco parodi#<span class="caret" aria-hidden="true"></span></h1>
+                <h1 aria-label="franco parodi"><span class="typed">franco parodi</span><span class="caret" aria-hidden="true"></span></h1>
 
-                <p class="role" data-i18n="hero.role">Software analyst and developer</p>
+                <p class="role" data-i18n="hero.role">Analista sviluppatore software</p>
 
-                <p class="intro" data-i18n="hero.intro">For over twenty years I have been designing, developing and maintaining desktop and web applications, on Linux and Windows, today with a focus on Python, ReactJS and AI integration. Curious and passionate about technology and innovation, I am at ease working in a team, both on site and remotely.</p>
+                <p class="intro" data-i18n="hero.intro">Da oltre vent'anni progetto, sviluppo e manutengo applicazioni desktop e web, su Linux e Windows, oggi con un focus su Python, ReactJS e integrazione con l'AI. Curioso, appassionato di tecnologia e innovazione, mi trovo a mio agio nel lavoro in team, in presenza e da remoto.</p>
 
                 <div class="links">
                     <a href="https://github.com/francoparodi" target="_blank" rel="noopener">
@@ -872,20 +890,20 @@
 
                 <div class="section-title">
                     <span class="section-number">01.</span>
-                    <h2 data-i18n="about.title">About</h2>
+                    <h2 data-i18n="about.title">Chi sono</h2>
                 </div>
 
                 <div class="about-grid">
 
                     <div class="about">
 
-                        <p data-i18n="about.p1">I am <span class='highlight'>Franco</span>, a professional with many years of experience in IT as a software analyst and developer, working on desktop and web applications.</p>
+                        <p data-i18n="about.p1">Sono <span class=\"highlight\">Franco</span>, un professionista con esperienza pluriennale nel settore informatico nel ruolo di analista sviluppatore, su applicazioni desktop e web.</p>
 
-                        <p data-i18n="about.p2">I stand out for the wide range of skills built up over the years, working both on <span class='highlight'>projects</span> and on <span class='highlight'>products</span>: from ERP software on IBM AS/400 to modern web apps, through to the integration of artificial intelligence.</p>
+                        <p data-i18n="about.p2">Mi distinguo per l'ampio ventaglio di competenze acquisite negli anni, lavorando sia su <span class=\"highlight\">progetti</span> che su <span class=\"highlight\">prodotti</span>: dal gestionale su IBM AS/400 alle web app moderne, fino all'integrazione con l'intelligenza artificiale.</p>
 
-                        <p data-i18n="about.p3">Strong interpersonal communication skills, a team player with a positive and proactive attitude to solving even complex problems.</p>
+                        <p data-i18n="about.p3">Ottime doti di comunicazione interpersonale, amante del lavoro in team, atteggiamento propositivo e proattivo nella risoluzione di problematiche anche complesse.</p>
 
-                        <p data-i18n="about.p4"><strong>Education:</strong> Electrical engineering technician — ITIS Magistri Cumacini, Como.<br /><strong>Languages:</strong> Italian (native), English (B2).<br /><strong>Interests:</strong> tech and coding, trekking, kickboxing, snowboarding, running, motorbikes, cycling, film and TV series, electric guitar, scuba diving.</p>
+                        <p data-i18n="about.p4"><strong>Formazione:</strong> Perito elettrotecnico — ITIS Magistri Cumacini, Como.<br /> <strong>Lingue:</strong> Italiano (madrelingua), Inglese (B2).<br /> <strong>Interessi:</strong> tech e coding, trekking, kickboxing, snowboard, corsa, moto, bici, cinema e serie TV, chitarra elettrica, immersioni subacquee.</p>
 
                     </div>
 
@@ -908,13 +926,13 @@
 
                 <div class="section-title">
                     <span class="section-number">02.</span>
-                    <h2 data-i18n="skills.title">Skills</h2>
+                    <h2 data-i18n="skills.title">Competenze</h2>
                 </div>
 
                 <div class="skills">
 
                     <div class="skill-card">
-                        <h3 data-i18n="skills.languages">Languages &amp; Frameworks</h3>
+                        <h3 data-i18n="skills.languages">Linguaggi &amp; Framework</h3>
                         <ul class="tech">
                             <li>Java 8</li>
                             <li>JSF2</li>
@@ -945,7 +963,7 @@
                     </div>
 
                     <div class="skill-card">
-                        <h3 data-i18n="skills.database">Databases</h3>
+                        <h3 data-i18n="skills.database">Database</h3>
                         <ul class="tech">
                             <li>MySQL</li>
                             <li>PostgreSQL</li>
@@ -955,7 +973,7 @@
                     </div>
 
                     <div class="skill-card">
-                        <h3 data-i18n="skills.envs">Environments &amp; IDEs</h3>
+                        <h3 data-i18n="skills.envs">Ambienti &amp; IDE</h3>
                         <ul class="tech">
                             <li>Linux</li>
                             <li>Windows</li>
@@ -985,24 +1003,24 @@
 
                 <div class="section-title">
                     <span class="section-number">03.</span>
-                    <h2 data-i18n="exp.title">Experience</h2>
+                    <h2 data-i18n="exp.title">Esperienze</h2>
                 </div>
 
 
                 <div class="experience">
 
-                    <div class="date" data-i18n="exp1.date">May 2022 — Present</div>
+                    <div class="date" data-i18n="exp1.date">Maggio 2022 — Attuale</div>
 
                     <div class="job">
 
                         <h3>
-                            <span data-i18n="exp1.role">Software analyst and developer</span>
+                            <span data-i18n="exp1.role">Analista sviluppatore</span>
                             <span class="company">@ Orobix s.r.l.</span>
                         </h3>
 
-                        <p class="meta" data-i18n="exp1.meta">Employee · Bergamo</p>
+                        <p class="meta" data-i18n="exp1.meta">Dipendente · Bergamo</p>
 
-                        <p data-i18n="exp1.desc">Analysis, development and maintenance of software, with the integration of artificial intelligence solutions. Linux, Windows, MacOS and Raspberry Pi architectures; development in VSCode with AI (Claude Code).</p>
+                        <p data-i18n="exp1.desc">Analisi, sviluppo e manutenzione software, con integrazione di soluzioni di intelligenza artificiale. Architetture Linux, Windows, MacOS e Raspberry Pi; sviluppo in VSCode con AI (Claude Code).</p>
 
                         <ul class="tech">
                             <li>ReactJS</li>
@@ -1023,18 +1041,18 @@
 
                 <div class="experience">
 
-                    <div class="date" data-i18n="exp2.date">March 2004 — May 2022</div>
+                    <div class="date" data-i18n="exp2.date">Marzo 2004 — Maggio 2022</div>
 
                     <div class="job">
 
                         <h3>
-                            <span data-i18n="exp2.role">Software analyst and developer — R&amp;D</span>
+                            <span data-i18n="exp2.role">Analista sviluppatore — R&amp;D</span>
                             <span class="company">@ SmeUP S.p.A.</span>
                         </h3>
 
-                        <p class="meta" data-i18n="exp2.meta">Employee · Brescia</p>
+                        <p class="meta" data-i18n="exp2.meta">Dipendente · Brescia</p>
 
-                        <p data-i18n="exp2.desc">Analysis, development and maintenance of ERP software within the R&amp;D department. Linux, Windows, Windows Mobile, Raspberry Pi, Arduino and IBM AS/400 architectures; Netbeans, Eclipse, IntelliJ and TN5250j IDEs.</p>
+                        <p data-i18n="exp2.desc">Analisi, sviluppo e manutenzione di software gestionale all'interno del reparto R&amp;D. Architetture Linux, Windows, Windows Mobile, Raspberry Pi, Arduino e IBM AS/400; IDE Netbeans, Eclipse, IntelliJ, TN5250j.</p>
 
                         <ul class="tech">
                             <li>Java 8</li>
@@ -1057,18 +1075,18 @@
 
                 <div class="experience">
 
-                    <div class="date" data-i18n="exp3.date">February 2002 — February 2004</div>
+                    <div class="date" data-i18n="exp3.date">Febbraio 2002 — Febbraio 2004</div>
 
                     <div class="job">
 
                         <h3>
-                            <span data-i18n="exp3.role">Software analyst and developer</span>
+                            <span data-i18n="exp3.role">Analista sviluppatore</span>
                             <span class="company">@ DataSys / Datatext</span>
                         </h3>
 
-                        <p class="meta" data-i18n="exp3.meta">Freelance · Milan</p>
+                        <p class="meta" data-i18n="exp3.meta">Libero professionista · Milano</p>
 
-                        <p data-i18n="exp3.desc">Analysis, development and maintenance of ERP software. Linux, Windows, Windows Mobile and IBM AS/400 architectures; Netbeans and TN5250j IDEs.</p>
+                        <p data-i18n="exp3.desc">Analisi, sviluppo e manutenzione di software gestionale. Architetture Linux, Windows, Windows Mobile e IBM AS/400; IDE Netbeans e TN5250j.</p>
 
                         <ul class="tech">
                             <li>Visual Basic 6.0</li>
@@ -1088,18 +1106,18 @@
 
                 <div class="experience">
 
-                    <div class="date" data-i18n="exp4.date">January 1999 — January 2002</div>
+                    <div class="date" data-i18n="exp4.date">Gennaio 1999 — Gennaio 2002</div>
 
                     <div class="job">
 
                         <h3>
-                            <span data-i18n="exp4.role">Software analyst and developer</span>
+                            <span data-i18n="exp4.role">Analista sviluppatore</span>
                             <span class="company">@ Centro Logistico Internazionale</span>
                         </h3>
 
-                        <p class="meta" data-i18n="exp4.meta">Freelance · Milan</p>
+                        <p class="meta" data-i18n="exp4.meta">Libero professionista · Milano</p>
 
-                        <p data-i18n="exp4.desc">Analysis, development and maintenance of ERP software on Windows and IBM AS/400 architectures.</p>
+                        <p data-i18n="exp4.desc">Analisi, sviluppo e manutenzione di software gestionale su architetture Windows e IBM AS/400.</p>
 
                         <ul class="tech">
                             <li>Visual Basic 6.0</li>
@@ -1128,7 +1146,7 @@
 
                 <div class="section-title">
                     <span class="section-number">04.</span>
-                    <h2 data-i18n="proj.title">Projects</h2>
+                    <h2 data-i18n="proj.title">Progetti</h2>
                 </div>
 
 
@@ -1147,7 +1165,7 @@
 
                         <h3>WealthAI</h3>
 
-                        <p data-i18n="proj1.desc">Mobile application for tracking body weight and nutrition with the support of artificial intelligence.</p>
+                        <p data-i18n="proj1.desc">Applicazione mobile per il controllo del peso corporeo e dell'alimentazione con il supporto dell'intelligenza artificiale.</p>
 
                         <ul class="tech">
                             <li>Mobile app</li>
@@ -1171,7 +1189,7 @@
 
                         <h3>FacesAccess</h3>
 
-                        <p data-i18n="proj2.desc">Web app for managing and monitoring access to a gym through facial recognition.</p>
+                        <p data-i18n="proj2.desc">Web app per la gestione e il monitoraggio degli accessi ad una palestra tramite riconoscimento facciale.</p>
 
                         <ul class="tech">
                             <li>Web app</li>
@@ -1195,7 +1213,7 @@
 
                         <h3>Remote Control</h3>
 
-                        <p data-i18n="proj3.desc">Web app for the remote control of a 4WD rover model based on Raspberry Pi.</p>
+                        <p data-i18n="proj3.desc">Web app per il controllo remoto di un modellino rover 4WD basato su Raspberry PI</p>
 
                         <ul class="tech">
                             <li>Web app</li>
@@ -1219,7 +1237,7 @@
 
                         <h3>InventaryAI</h3>
 
-                        <p data-i18n="proj4.desc">Mobile app for inventory management assisted by artificial intelligence.</p>
+                        <p data-i18n="proj4.desc">App mobile per la gestione dell'inventario assistita dall'intelligenza artificiale.</p>
 
                         <ul class="tech">
                             <li>Mobile app</li>
@@ -1243,7 +1261,7 @@
 
                         <h3>ThermoPI</h3>
 
-                        <p data-i18n="proj5.desc">Web app for controlling room temperature through a thermostat based on Raspberry Pi.</p>
+                        <p data-i18n="proj5.desc">Web app per il controllo della temperatura ambientale tramite termostato basata su Raspberry Pi.</p>
 
                         <ul class="tech">
                             <li>Web app</li>
@@ -1267,7 +1285,7 @@
 
                         <h3>Jariko — JavaToRPG</h3>
 
-                        <p data-i18n="proj6.desc">Open source interpreter that runs RPG programs on the JVM: a project I contributed to at SmeUP.</p>
+                        <p data-i18n="proj6.desc">Interprete open source che esegue programmi RPG sulla JVM: progetto a cui ho contribuito in SmeUP.</p>
 
                         <ul class="tech">
                             <li>Kotlin</li>
@@ -1292,13 +1310,13 @@
 
                 <div class="contact">
 
-                    <p class="eyebrow" data-i18n="contact.eyebrow">05. What's next?</p>
+                    <p class="eyebrow" data-i18n="contact.eyebrow">05. E adesso?</p>
 
-                    <h2 data-i18n="contact.title">Let's work together.</h2>
+                    <h2 data-i18n="contact.title">Lavoriamo insieme.</h2>
 
-                    <p data-i18n="contact.text">If you have an interesting project, or simply want to get in touch, drop me a line.</p>
+                    <p data-i18n="contact.text">Se hai un progetto interessante o vuoi semplicemente metterti in contatto, scrivimi.</p>
 
-                    <a class="button" href="mailto:franco.parodi@aol.com" data-i18n="contact.button">Say hello</a>
+                    <a class="button" href="mailto:franco.parodi@aol.com" data-i18n="contact.button">Scrivimi</a>
 
                     <div class="contact-details">
                         <a href="mailto:franco.parodi@aol.com">franco.parodi@aol.com</a>
@@ -1324,65 +1342,65 @@
         (function () {
             "use strict";
 
-            /* L'inglese e' il testo gia' presente nell'HTML ed e' la lingua predefinita:
-               qui c'e' solo l'italiano. Le stringhe possono contenere markup,
-               viene inserito con innerHTML. */
-            var IT = {
-                "meta.title": "Franco Parodi — Analista Sviluppatore Software",
-                "meta.description": "Portfolio personale di Franco Parodi, analista sviluppatore software con esperienza pluriennale su applicazioni desktop e web.",
+            /* L'italiano e' il testo gia' presente nell'HTML ed e' la lingua
+               predefinita: qui c'e' solo l'inglese. Le stringhe possono contenere
+               markup, viene inserito con innerHTML. */
+            var EN = {
+                "meta.title": "Franco Parodi \u2014 Software Analyst and Developer",
+                "meta.description": "Personal portfolio of Franco Parodi, software analyst and developer with many years of experience in desktop and web applications.",
 
-                "nav.home": "00. Home",
-                "nav.about": "01. Chi sono",
-                "nav.skills": "02. Competenze",
-                "nav.experience": "03. Esperienze",
-                "nav.projects": "04. Progetti",
-                "nav.contact": "05. Contatti",
+                "nav.home": "127.0.0.1",
+                "nav.about": "About",
+                "nav.skills": "Skills",
+                "nav.experience": "Experience",
+                "nav.projects": "Projects",
+                "nav.contact": "Contact",
 
-                "hero.role": "Analista sviluppatore software",
-                "hero.intro": "Da oltre vent'anni progetto, sviluppo e manutengo applicazioni desktop e web, su Linux e Windows, oggi con un focus su Python, ReactJS e integrazione con l'AI. Curioso, appassionato di tecnologia e innovazione, mi trovo a mio agio nel lavoro in team, in presenza e da remoto.",
+                "hero.role": "Software analyst and developer",
+                "hero.intro": "For over twenty years I have been designing, developing and maintaining desktop and web applications, on Linux and Windows, today with a focus on Python, ReactJS and AI integration. Curious and passionate about technology and innovation, I am at ease working in a team, both on site and remotely.",
 
-                "about.title": "Chi sono",
-                "about.p1": "Sono <span class=\"highlight\">Franco</span>, un professionista con esperienza pluriennale nel settore informatico nel ruolo di analista sviluppatore, su applicazioni desktop e web.",
-                "about.p2": "Mi distinguo per l'ampio ventaglio di competenze acquisite negli anni, lavorando sia su <span class=\"highlight\">progetti</span> che su <span class=\"highlight\">prodotti</span>: dal gestionale su IBM AS/400 alle web app moderne, fino all'integrazione con l'intelligenza artificiale.",
-                "about.p3": "Ottime doti di comunicazione interpersonale, amante del lavoro in team, atteggiamento propositivo e proattivo nella risoluzione di problematiche anche complesse.",
-                "about.p4": "<strong>Formazione:</strong> Perito elettrotecnico — ITIS Magistri Cumacini, Como.<br /> <strong>Lingue:</strong> Italiano (madrelingua), Inglese (B2).<br /> <strong>Interessi:</strong> tech e coding, trekking, kickboxing, snowboard, corsa, moto, bici, cinema e serie TV, chitarra elettrica, immersioni subacquee.",
+                "about.title": "About",
+                "about.p1": "I am <span class='highlight'>Franco</span>, a professional with many years of experience in IT as a software analyst and developer, working on desktop and web applications.",
+                "about.p2": "I stand out for the wide range of skills built up over the years, working both on <span class='highlight'>projects</span> and on <span class='highlight'>products</span>: from ERP software on IBM AS/400 to modern web apps, through to the integration of artificial intelligence.",
+                "about.p3": "Strong interpersonal communication skills, a team player with a positive and proactive attitude to solving even complex problems.",
+                "about.p4": "<strong>Education:</strong> Electrical engineering technician \u2014 ITIS Magistri Cumacini, Como.<br /><strong>Languages:</strong> Italian (native), English (B2).<br /><strong>Interests:</strong> tech and coding, trekking, kickboxing, snowboarding, running, motorbikes, cycling, film and TV series, electric guitar, scuba diving.",
 
-                "skills.title": "Competenze",
-                "skills.languages": "Linguaggi &amp; Framework",
+                "skills.title": "Skills",
+                "skills.languages": "Languages &amp; Frameworks",
                 "skills.tooling": "Tooling &amp; DevOps",
-                "skills.database": "Database",
-                "skills.envs": "Ambienti &amp; IDE",
+                "skills.database": "Databases",
+                "skills.envs": "Environments &amp; IDEs",
 
-                "exp.title": "Esperienze",
-                "exp1.date": "Maggio 2022 — Attuale",
-                "exp1.role": "Analista sviluppatore",
-                "exp1.meta": "Dipendente · Bergamo",
-                "exp1.desc": "Analisi, sviluppo e manutenzione software, con integrazione di soluzioni di intelligenza artificiale. Architetture Linux, Windows, MacOS e Raspberry Pi; sviluppo in VSCode con AI (Claude Code).",
-                "exp2.date": "Marzo 2004 — Maggio 2022",
-                "exp2.role": "Analista sviluppatore — R&amp;D",
-                "exp2.meta": "Dipendente · Brescia",
-                "exp2.desc": "Analisi, sviluppo e manutenzione di software gestionale all'interno del reparto R&amp;D. Architetture Linux, Windows, Windows Mobile, Raspberry Pi, Arduino e IBM AS/400; IDE Netbeans, Eclipse, IntelliJ, TN5250j.",
-                "exp3.date": "Febbraio 2002 — Febbraio 2004",
-                "exp3.role": "Analista sviluppatore",
-                "exp3.meta": "Libero professionista · Milano",
-                "exp3.desc": "Analisi, sviluppo e manutenzione di software gestionale. Architetture Linux, Windows, Windows Mobile e IBM AS/400; IDE Netbeans e TN5250j.",
-                "exp4.date": "Gennaio 1999 — Gennaio 2002",
-                "exp4.role": "Analista sviluppatore",
-                "exp4.meta": "Libero professionista · Milano",
-                "exp4.desc": "Analisi, sviluppo e manutenzione di software gestionale su architetture Windows e IBM AS/400.",
+                "exp.title": "Experience",
+                "exp1.date": "May 2022 \u2014 Present",
+                "exp1.role": "Software analyst and developer",
+                "exp1.meta": "Employee \u00b7 Bergamo",
+                "exp1.desc": "Analysis, development and maintenance of software, with the integration of artificial intelligence solutions. Linux, Windows, MacOS and Raspberry Pi architectures; development in VSCode with AI (Claude Code).",
+                "exp2.date": "March 2004 \u2014 May 2022",
+                "exp2.role": "Software analyst and developer \u2014 R&amp;D",
+                "exp2.meta": "Employee \u00b7 Brescia",
+                "exp2.desc": "Analysis, development and maintenance of ERP software within the R&amp;D department. Linux, Windows, Windows Mobile, Raspberry Pi, Arduino and IBM AS/400 architectures; Netbeans, Eclipse, IntelliJ and TN5250j IDEs.",
+                "exp3.date": "February 2002 \u2014 February 2004",
+                "exp3.role": "Software analyst and developer",
+                "exp3.meta": "Freelance \u00b7 Milan",
+                "exp3.desc": "Analysis, development and maintenance of ERP software. Linux, Windows, Windows Mobile and IBM AS/400 architectures; Netbeans and TN5250j IDEs.",
+                "exp4.date": "January 1999 \u2014 January 2002",
+                "exp4.role": "Software analyst and developer",
+                "exp4.meta": "Freelance \u00b7 Milan",
+                "exp4.desc": "Analysis, development and maintenance of ERP software on Windows and IBM AS/400 architectures.",
 
-                "proj.title": "Progetti",
-                "proj1.desc": "Applicazione mobile per il controllo del peso corporeo e dell'alimentazione con il supporto dell'intelligenza artificiale.",
-                "proj2.desc": "Web app per la gestione e il monitoraggio degli accessi ad una palestra tramite riconoscimento facciale.",
-                "proj3.desc": "Web app per il controllo remoto di un modellino rover 4WD basato su Raspberry PI",
-                "proj4.desc": "App mobile per la gestione dell'inventario assistita dall'intelligenza artificiale.",
-                "proj5.desc": "Web app per il controllo della temperatura ambientale tramite termostato basata su Raspberry Pi.",
-                "proj6.desc": "Interprete open source che esegue programmi RPG sulla JVM: progetto a cui ho contribuito in SmeUP.",
+                "proj.title": "Projects",
+                "proj1.desc": "Mobile application for tracking body weight and nutrition with the support of artificial intelligence.",
+                "proj2.desc": "Web app for managing and monitoring access to a gym through facial recognition.",
+                "proj3.desc": "Web app for the remote control of a 4WD rover model based on Raspberry Pi.",
+                "proj4.desc": "Mobile app for inventory management assisted by artificial intelligence.",
+                "proj5.desc": "Web app for controlling room temperature through a thermostat based on Raspberry Pi.",
+                "proj6.desc": "Open source interpreter that runs RPG programs on the JVM: a project I contributed to at SmeUP.",
 
-                "contact.eyebrow": "05. E adesso?",
-                "contact.title": "Lavoriamo insieme.",
-                "contact.text": "Se hai un progetto interessante o vuoi semplicemente metterti in contatto, scrivimi.",
-                "contact.button": "Scrivimi",
+                "contact.eyebrow": "05. What's next?",
+                "contact.title": "Let's work together.",
+                "contact.text": "If you have an interesting project, or simply want to get in touch, drop me a line.",
+                "contact.button": "Say hello",
                 "contact.city": "Palazzolo sull'Oglio (BS), Italia"
             };
 
@@ -1390,17 +1408,17 @@
             var buttons = document.querySelectorAll("[data-lang-btn]");
             var meta = document.querySelector('meta[name="description"]');
 
-            /* Testo inglese originale, cosi' il ritorno a EN non ha bisogno di dizionario. */
-            var EN = {};
+            /* Testo italiano originale, cosi' il ritorno a IT non ha bisogno di dizionario. */
+            var IT = {};
             var i;
             for (i = 0; i < nodes.length; i++) {
-                EN[nodes[i].getAttribute("data-i18n")] = nodes[i].innerHTML;
+                IT[nodes[i].getAttribute("data-i18n")] = nodes[i].innerHTML;
             }
-            EN["meta.title"] = document.title;
-            EN["meta.description"] = meta ? meta.content : "";
+            IT["meta.title"] = document.title;
+            IT["meta.description"] = meta ? meta.content : "";
 
             function apply(lang) {
-                var dict = lang === "it" ? IT : EN;
+                var dict = lang === "en" ? EN : IT;
                 var k, j;
                 for (j = 0; j < nodes.length; j++) {
                     k = nodes[j].getAttribute("data-i18n");
@@ -1426,7 +1444,7 @@
                 }
             }
 
-            /* Lingua predefinita: inglese. Si passa all'italiano solo se il
+            /* Lingua predefinita: italiano. Si passa all'inglese solo se il
                visitatore lo ha gia' scelto in una visita precedente. */
             var saved = null;
             try {
@@ -1435,8 +1453,8 @@
                 saved = null;
             }
 
-            if (saved === "it") {
-                apply("it");
+            if (saved === "en") {
+                apply("en");
             }
 
             for (i = 0; i < buttons.length; i++) {
@@ -1565,6 +1583,46 @@
             }
 
             toggle.setAttribute("aria-label", labels().open);
+        })();
+
+        /* Il titolo si scrive da solo a ogni caricamento della pagina. */
+        (function () {
+            "use strict";
+
+            var title = document.querySelector("h1");
+            var typed = title && title.querySelector(".typed");
+
+            if (!typed) {
+                return;
+            }
+
+            var text = typed.textContent;
+
+            /* Chi ha chiesto meno animazioni vede subito il titolo intero. */
+            if (window.matchMedia &&
+                window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                return;
+            }
+
+            typed.textContent = "";
+            title.classList.add("typing");
+
+            var i = 0;
+
+            function step() {
+                i += 1;
+                typed.textContent = text.slice(0, i);
+
+                if (i < text.length) {
+                    /* Ritmo irregolare: una digitazione a intervalli fissi
+                       si riconosce subito come finta. */
+                    window.setTimeout(step, 55 + Math.random() * 85);
+                } else {
+                    title.classList.remove("typing");
+                }
+            }
+
+            window.setTimeout(step, 350);
         })();
 
         /* Alone chiaro che insegue il puntatore. */
