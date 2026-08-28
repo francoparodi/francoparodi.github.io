@@ -108,6 +108,48 @@
             overflow-wrap: break-word;
         }
 
+        /* =========================
+       COMPARSA IN DISSOLVENZA
+    ========================= */
+
+        /* Le regole valgono solo con la classe "js" sulla radice, messa dallo
+           script: senza JavaScript il contenuto e' visibile da subito invece
+           di restare invisibile per sempre. */
+        .js .fade-in,
+        .js .fade-soft {
+            opacity: 0;
+        }
+
+        .js .fade-in {
+            transform: translateY(14px);
+        }
+
+        /* La nav e' esclusa dallo spostamento: sotto i 768px usa gia' una
+           transform per entrare da destra e le due si annullerebbero. */
+        .js.revealed .fade-in,
+        .js.revealed .fade-soft {
+            opacity: 1;
+            transform: none;
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
+        }
+
+        /* Sfasamento: prima il resto dell'hero, poi navigazione e sezioni. */
+        .js.revealed .intro {
+            transition-delay: 0.12s;
+        }
+
+        .js.revealed .links {
+            transition-delay: 0.24s;
+        }
+
+        .js.revealed .fade-soft,
+        .js.revealed section,
+        .js.revealed footer {
+            transition-delay: 0.36s;
+        }
+
         /* Mentre il titolo si scrive il cursore resta fisso: lampeggia
            solo a digitazione finita, come in un terminale vero. */
         h1.typing .caret {
@@ -813,13 +855,19 @@
             }
         }
     </style>
+
+    <script>
+        /* Segna che il JavaScript e' attivo: solo in quel caso il contenuto
+           parte invisibile, in attesa della dissolvenza. */
+        document.documentElement.className = "js";
+    </script>
 </head>
 
 <body>
 
     <!-- NAVIGATION -->
 
-    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+    <button class="nav-toggle fade-soft" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -829,7 +877,7 @@
 
     <div class="cursor-glow" aria-hidden="true"></div>
 
-    <nav id="site-nav">
+    <nav id="site-nav" class="fade-soft">
         <ul>
             <li><a href="https://francoparodi.github.io/" data-i18n="nav.home">127.0.0.1</a></li>
             <li><a href="#about" data-i18n="nav.about">Chi sono</a></li>
@@ -856,11 +904,11 @@
 
                 <h1 aria-label="franco parodi"><span class="typed">franco parodi</span><span class="caret" aria-hidden="true"></span></h1>
 
-                <p class="role" data-i18n="hero.role">Analista sviluppatore software</p>
+                <p class="role fade-in" data-i18n="hero.role">Analista sviluppatore software</p>
 
-                <p class="intro" data-i18n="hero.intro">Da oltre vent'anni progetto, sviluppo e manutengo applicazioni desktop e web, su Linux e Windows, oggi con un focus su Python, ReactJS e integrazione con l'AI. Curioso, appassionato di tecnologia e innovazione, mi trovo a mio agio nel lavoro in team, in presenza e da remoto.</p>
+                <p class="intro fade-in" data-i18n="hero.intro">Da oltre vent'anni progetto, sviluppo e manutengo applicazioni desktop e web, su Linux e Windows, oggi con un focus su Python, ReactJS e integrazione con l'AI. Curioso, appassionato di tecnologia e innovazione, mi trovo a mio agio nel lavoro in team, in presenza e da remoto.</p>
 
-                <div class="links">
+                <div class="links fade-in">
                     <a href="https://github.com/francoparodi" target="_blank" rel="noopener">
                         GitHub ↗
                     </a>
@@ -884,7 +932,7 @@
 
         <!-- ABOUT -->
 
-        <section id="about">
+        <section id="about" class="fade-in">
 
             <div class="container">
 
@@ -920,7 +968,7 @@
 
         <!-- SKILLS -->
 
-        <section id="skills">
+        <section id="skills" class="fade-in">
 
             <div class="container">
 
@@ -997,7 +1045,7 @@
 
         <!-- EXPERIENCE -->
 
-        <section id="experience">
+        <section id="experience" class="fade-in">
 
             <div class="container">
 
@@ -1140,7 +1188,7 @@
 
         <!-- PROJECTS -->
 
-        <section id="projects">
+        <section id="projects" class="fade-in">
 
             <div class="container">
 
@@ -1304,7 +1352,7 @@
 
         <!-- CONTACT -->
 
-        <section id="contact">
+        <section id="contact" class="fade-in">
 
             <div class="container">
 
@@ -1333,7 +1381,7 @@
     </main>
 
 
-    <footer>
+    <footer class="fade-in">
         Designed &amp; built by Franco Parodi
     </footer>
 
@@ -1585,22 +1633,35 @@
             toggle.setAttribute("aria-label", labels().open);
         })();
 
-        /* Il titolo si scrive da solo a ogni caricamento della pagina. */
+        /* Rete di sicurezza: qualunque cosa succeda all'animazione, dopo
+           quattro secondi il contenuto e' comunque visibile. */
+        window.setTimeout(function () {
+            document.documentElement.classList.add("revealed");
+        }, 4000);
+
+        /* Il titolo si scrive da solo a ogni caricamento della pagina, poi il
+           resto della pagina entra in dissolvenza. */
         (function () {
             "use strict";
 
             var title = document.querySelector("h1");
             var typed = title && title.querySelector(".typed");
 
+            function reveal() {
+                document.documentElement.classList.add("revealed");
+            }
+
             if (!typed) {
+                reveal();
                 return;
             }
 
             var text = typed.textContent;
 
-            /* Chi ha chiesto meno animazioni vede subito il titolo intero. */
+            /* Chi ha chiesto meno animazioni vede subito titolo e contenuto. */
             if (window.matchMedia &&
                 window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                reveal();
                 return;
             }
 
@@ -1619,6 +1680,8 @@
                     window.setTimeout(step, 55 + Math.random() * 85);
                 } else {
                     title.classList.remove("typing");
+                    /* Breve pausa a titolo finito, poi entra il resto. */
+                    window.setTimeout(reveal, 220);
                 }
             }
 
