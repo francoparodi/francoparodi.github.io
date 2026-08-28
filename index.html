@@ -140,7 +140,7 @@
             position: fixed;
             top: 35px;
             right: 5%;
-            z-index: 10;
+            z-index: 25;
         }
 
         nav ul {
@@ -149,6 +149,66 @@
             flex-wrap: wrap;
             list-style: none;
             font-size: 13px;
+        }
+
+        /* Bottone hamburger e velo: servono solo sotto i 768px,
+           sul desktop restano fuori dal flusso. */
+        .nav-toggle,
+        .nav-overlay {
+            display: none;
+        }
+
+        .nav-toggle {
+            position: fixed;
+            top: 22px;
+            right: 5%;
+            z-index: 30;
+            width: 46px;
+            height: 46px;
+            padding: 0;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: rgba(17, 34, 64, 0.85);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            cursor: pointer;
+        }
+
+        .nav-toggle span {
+            position: absolute;
+            left: 50%;
+            width: 20px;
+            height: 2px;
+            margin-left: -10px;
+            border-radius: 2px;
+            background: var(--accent);
+            transition:
+                transform 0.25s ease,
+                opacity 0.2s ease;
+        }
+
+        .nav-toggle span:nth-child(1) {
+            top: 15px;
+        }
+
+        .nav-toggle span:nth-child(2) {
+            top: 22px;
+        }
+
+        .nav-toggle span:nth-child(3) {
+            top: 29px;
+        }
+
+        body.nav-open .nav-toggle span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        body.nav-open .nav-toggle span:nth-child(2) {
+            opacity: 0;
+        }
+
+        body.nav-open .nav-toggle span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
 
         nav a {
@@ -499,15 +559,79 @@
 
         @media (max-width: 768px) {
 
+            /* Il menu diventa un pannello laterale a scomparsa. */
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-overlay {
+                display: block;
+                position: fixed;
+                inset: 0;
+                z-index: 20;
+                background: rgba(2, 12, 27, 0.72);
+                touch-action: none;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+            }
+
+            body.nav-open .nav-overlay {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            body.nav-open {
+                overflow: hidden;
+            }
+
             nav {
-                position: static;
-                padding: 25px 0;
+                top: 0;
+                right: 0;
+                width: min(300px, 82vw);
+                height: 100%;
+                height: 100dvh;
+                padding: 96px 26px 32px;
+                background: var(--bg-light);
+                border-left: 1px solid var(--border);
+                box-shadow: -12px 0 34px rgba(2, 12, 27, 0.45);
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                visibility: hidden;
+                transform: translateX(100%);
+                transition:
+                    transform 0.3s ease,
+                    visibility 0.3s ease;
+            }
+
+            body.nav-open nav {
+                visibility: visible;
+                transform: translateX(0);
             }
 
             nav ul {
-                justify-content: center;
-                gap: 8px 16px;
-                font-size: 12px;
+                display: block;
+                font-size: 15px;
+            }
+
+            nav li+li {
+                border-top: 1px solid var(--border);
+            }
+
+            nav a {
+                display: block;
+                padding: 14px 2px;
+                color: var(--text);
+            }
+
+            .lang-switch {
+                padding: 18px 2px 0;
+                border-top: 1px solid var(--border);
+            }
+
+            .lang-switch button {
+                padding: 6px 8px;
+                font-size: 15px;
             }
 
             header {
@@ -558,6 +682,40 @@
             }
         }
 
+        /* Telefoni piu' piccoli: piu' spazio utile in larghezza. */
+        @media (max-width: 480px) {
+
+            .container {
+                width: 92%;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .section-title {
+                gap: 10px;
+                margin-bottom: 28px;
+            }
+
+            .skills {
+                grid-template-columns: 1fr;
+            }
+
+            .project {
+                padding: 24px 18px;
+            }
+
+            .contact-details {
+                gap: 10px 18px;
+                margin-top: 30px;
+            }
+
+            .links {
+                gap: 12px 18px;
+            }
+        }
+
         /* Rispetta chi preferisce meno animazioni. */
         @media (prefers-reduced-motion: reduce) {
 
@@ -576,7 +734,15 @@
 
     <!-- NAVIGATION -->
 
-    <nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </button>
+
+    <div class="nav-overlay" aria-hidden="true"></div>
+
+    <nav id="site-nav">
         <ul>
             <li><a href="https://francoparodi.github.io/" data-i18n="nav.home">00. Home</a></li>
             <li><a href="#about" data-i18n="nav.about">01. About</a></li>
@@ -1212,6 +1378,127 @@
                     apply(this.getAttribute("data-lang-btn"));
                 });
             }
+        })();
+
+        /* Menu laterale a scomparsa sui telefoni. */
+        (function () {
+            "use strict";
+
+            var toggle = document.querySelector(".nav-toggle");
+            var overlay = document.querySelector(".nav-overlay");
+            var nav = document.getElementById("site-nav");
+
+            if (!toggle || !overlay || !nav) {
+                return;
+            }
+
+            var LABELS = {
+                en: { open: "Open menu", close: "Close menu" },
+                it: { open: "Apri il menu", close: "Chiudi il menu" }
+            };
+
+            function labels() {
+                return LABELS[document.documentElement.lang] || LABELS.en;
+            }
+
+            function isOpen() {
+                return document.body.classList.contains("nav-open");
+            }
+
+            function focusable() {
+                return nav.querySelectorAll("a[href], button:not([disabled])");
+            }
+
+            function open() {
+                document.body.classList.add("nav-open");
+                toggle.setAttribute("aria-expanded", "true");
+                toggle.setAttribute("aria-label", labels().close);
+                var items = focusable();
+                if (items.length) {
+                    items[0].focus();
+                }
+            }
+
+            function close(returnFocus) {
+                document.body.classList.remove("nav-open");
+                toggle.setAttribute("aria-expanded", "false");
+                toggle.setAttribute("aria-label", labels().open);
+                if (returnFocus) {
+                    toggle.focus();
+                }
+            }
+
+            toggle.addEventListener("click", function () {
+                if (isOpen()) {
+                    close(true);
+                } else {
+                    open();
+                }
+            });
+
+            overlay.addEventListener("click", function () {
+                close(true);
+            });
+
+            /* Un tocco su una voce porta alla sezione e richiude il pannello. */
+            nav.addEventListener("click", function (event) {
+                if (event.target.closest("a")) {
+                    close(false);
+                }
+            });
+
+            document.addEventListener("keydown", function (event) {
+                if (!isOpen()) {
+                    return;
+                }
+
+                if (event.key === "Escape") {
+                    close(true);
+                    return;
+                }
+
+                if (event.key !== "Tab") {
+                    return;
+                }
+
+                /* Finche' il pannello e' aperto il focus resta al suo interno. */
+                var items = focusable();
+                if (!items.length) {
+                    return;
+                }
+
+                var first = items[0];
+                var last = items[items.length - 1];
+
+                if (event.shiftKey && document.activeElement === first) {
+                    event.preventDefault();
+                    last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                    event.preventDefault();
+                    first.focus();
+                }
+            });
+
+            /* Tornando alla larghezza desktop il pannello non ha piu' senso. */
+            window.addEventListener("resize", function () {
+                if (isOpen() && window.innerWidth > 768) {
+                    close(false);
+                }
+            });
+
+            /* L'etichetta segue la lingua scelta nel selettore IT/EN. */
+            var langButtons = document.querySelectorAll("[data-lang-btn]");
+            var b;
+            for (b = 0; b < langButtons.length; b++) {
+                langButtons[b].addEventListener("click", function () {
+                    toggle.setAttribute(
+                        "aria-label",
+                        isOpen() ? labels().close : labels().open
+                    );
+                });
+            }
+
+            toggle.setAttribute("aria-label", labels().open);
         })();
     </script>
 
