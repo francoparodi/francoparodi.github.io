@@ -240,35 +240,103 @@
     toggle.setAttribute("aria-label", labels().open);
 })();
 
-/* Rete di sicurezza: qualunque cosa succeda all'animazione, dopo
-   quattro secondi il contenuto e' comunque visibile. */
-window.setTimeout(function () {
-    document.documentElement.classList.add("revealed");
-}, 4000);
-
-/* Il titolo si scrive da solo a ogni caricamento della pagina, poi il
-   resto della pagina entra in dissolvenza. */
+/* Il titolo si scrive da solo a ogni caricamento della pagina. A digitazione
+   finita entra in dissolvenza il resto della pagina, e da li' in poi ogni
+   blocco sfuma dentro e fuori ogni volta che entra o esce dallo schermo,
+   scorrendo in su come in giu'. */
 (function () {
     "use strict";
 
     var title = document.querySelector("h1");
     var typed = title && title.querySelector(".typed");
 
+    /* La navigazione e' fissa: resta sempre in campo, quindi non ha senso
+       farla sfumare a ogni scorrimento. Entra una volta e basta. */
+    var nav = document.querySelectorAll(".fade-soft");
+
+    /* Tutto il resto sfuma ogni volta, in entrambe le direzioni. */
+    var heroText = document.querySelectorAll(".hero .fade-in");
+    var sections = document.querySelectorAll("section.fade-in");
+    var footer = document.querySelectorAll("footer.fade-in");
+
+    function show(nodes) {
+        var i;
+        for (i = 0; i < nodes.length; i++) {
+            nodes[i].classList.add("is-visible");
+        }
+    }
+
+    /* Rete di sicurezza: se la digitazione non arriva in fondo, dopo quattro
+       secondi il contenuto compare comunque, tutto insieme. */
+    var failsafe = window.setTimeout(function () {
+        show(nav);
+        show(heroText);
+        show(sections);
+        show(footer);
+    }, 4000);
+
+    function watch(nodes, rootMargin) {
+        if (!window.IntersectionObserver) {
+            /* Browser senza observer: meglio tutto visibile che niente. */
+            show(nodes);
+            return;
+        }
+
+        var observer = new window.IntersectionObserver(function (entries) {
+            var i, entry;
+            for (i = 0; i < entries.length; i++) {
+                entry = entries[i];
+                /* Nessun unobserve: l'elemento va e viene, cosi' la
+                   dissolvenza si ripete a ogni passaggio. */
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                } else {
+                    entry.target.classList.remove("is-visible");
+                }
+            }
+        }, { rootMargin: rootMargin });
+
+        var i;
+        for (i = 0; i < nodes.length; i++) {
+            observer.observe(nodes[i]);
+        }
+    }
+
     function reveal() {
-        document.documentElement.classList.add("revealed");
+        window.clearTimeout(failsafe);
+        show(nav);
+
+        /* Il margine negativo in basso fa partire la dissolvenza quando il
+           blocco e' entrato per davvero, non appena sfiora il bordo. */
+        watch(heroText, "0px 0px -15% 0px");
+        watch(sections, "0px 0px -15% 0px");
+
+        /* Il footer e' alto poche decine di pixel e sta in fondo alla pagina:
+           con lo stesso margine negativo resterebbe sempre dentro la fascia
+           esclusa e non comparirebbe mai, nemmeno a pagina scorsa in fondo. */
+        watch(footer, "0px");
+    }
+
+    function revealAll() {
+        window.clearTimeout(failsafe);
+        show(nav);
+        show(heroText);
+        show(sections);
+        show(footer);
     }
 
     if (!typed) {
-        reveal();
+        revealAll();
         return;
     }
 
     var text = typed.textContent;
 
-    /* Chi ha chiesto meno animazioni vede subito titolo e contenuto. */
+    /* Chi ha chiesto meno animazioni vede subito titolo e contenuto, senza
+       nemmeno la comparsa a scorrimento. */
     if (window.matchMedia &&
         window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        reveal();
+        revealAll();
         return;
     }
 

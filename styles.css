@@ -87,7 +87,8 @@ header {
 }
 
 h1 {
-    color: var(--white);
+    /* Stesso verde-acqua del cursore che lampeggia accanto (#64ffda). */
+    color: var(--accent);
     font-size: clamp(38px, 8vw, 72px);
 
     /* Meno pesante del bold di default del browser: il peso 500 e' gia'
@@ -115,10 +116,12 @@ COMPARSA IN DISSOLVENZA
     transform: translateY(14px);
 }
 
-/* La nav e' esclusa dallo spostamento: sotto i 768px usa gia' una
-   transform per entrare da destra e le due si annullerebbero. */
-.js.revealed .fade-in,
-.js.revealed .fade-soft {
+/* La classe arriva dallo script, elemento per elemento: sull'hero appena
+   il titolo ha finito di scriversi, sulle sezioni quando entrano in campo
+   scorrendo. La nav e' esclusa dallo spostamento perche' sotto i 768px usa
+   gia' una transform per entrare da destra, e le due si annullerebbero. */
+.js .fade-in.is-visible,
+.js .fade-soft.is-visible {
     opacity: 1;
     transform: none;
     transition:
@@ -126,18 +129,18 @@ COMPARSA IN DISSOLVENZA
         transform 0.7s ease;
 }
 
-/* Sfasamento: prima il resto dell'hero, poi navigazione e sezioni. */
-.js.revealed .intro {
+/* Sfasamento dentro l'hero: il resto del testo, poi la navigazione.
+   Le sezioni non hanno ritardo: comparendo una alla volta mentre si
+   scorre, un'attesa in piu' si sentirebbe come lentezza. */
+.js .intro.is-visible {
     transition-delay: 0.12s;
 }
 
-.js.revealed .links {
+.js .links.is-visible {
     transition-delay: 0.24s;
 }
 
-.js.revealed .fade-soft,
-.js.revealed section,
-.js.revealed footer {
+.js .fade-soft.is-visible {
     transition-delay: 0.36s;
 }
 
