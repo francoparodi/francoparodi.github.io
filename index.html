@@ -263,10 +263,6 @@
             .cursor-glow {
                 display: none;
             }
-
-            .caret {
-                animation: none;
-            }
         }
 
         /* Bottone hamburger e velo: servono solo sotto i 768px,
@@ -530,6 +526,11 @@
             color: var(--text-light);
             font-size: 13px;
             margin-bottom: 15px;
+        }
+
+        /* Senza descrizione sotto, il margine resterebbe appeso nel vuoto. */
+        .job .meta:last-child {
+            margin-bottom: 0;
         }
 
         .job p {
@@ -951,7 +952,7 @@
 
                         <p data-i18n="about.p3">Ottime doti di comunicazione interpersonale, amante del lavoro in team, atteggiamento propositivo e proattivo nella risoluzione di problematiche anche complesse.</p>
 
-                        <p data-i18n="about.p4"><strong>Formazione:</strong> Perito elettrotecnico — ITIS Magistri Cumacini, Como.<br /> <strong>Lingue:</strong> Italiano (madrelingua), Inglese (B2).<br /> <strong>Interessi:</strong> tech e coding, trekking, kickboxing, snowboard, corsa, moto, bici, cinema e serie TV, chitarra elettrica, immersioni subacquee.</p>
+                        <p data-i18n="about.p4"><strong>Interessi:</strong> tech e coding, trekking, kickboxing, snowboard, corsa, moto, bici, cinema e serie TV, chitarra elettrica, immersioni subacquee.</p>
 
                     </div>
 
@@ -995,6 +996,8 @@
                             <li>CSS</li>
                             <li>Streamlit</li>
                             <li>RPG/400</li>
+                            <li>Gambas</li>
+                            <li>Visual Basic</li>
                         </ul>
                     </div>
 
@@ -1007,6 +1010,8 @@
                             <li>Jenkins</li>
                             <li>Maven</li>
                             <li>Docker</li>
+                            <li>Nexus</li>
+                            <li>AML</li>
                         </ul>
                     </div>
 
@@ -1017,6 +1022,7 @@
                             <li>PostgreSQL</li>
                             <li>IBM DB2/400</li>
                             <li>SQLServer</li>
+                            <li>MongoDB</li>
                         </ul>
                     </div>
 
@@ -1067,21 +1073,6 @@
                         </h3>
 
                         <p class="meta" data-i18n="exp1.meta">Dipendente · Bergamo</p>
-
-                        <p data-i18n="exp1.desc">Analisi, sviluppo e manutenzione software, con integrazione di soluzioni di intelligenza artificiale. Architetture Linux, Windows, MacOS e Raspberry Pi; sviluppo in VSCode con AI (Claude Code).</p>
-
-                        <ul class="tech">
-                            <li>ReactJS</li>
-                            <li>Python 3</li>
-                            <li>Django (DRF)</li>
-                            <li>FastAPI</li>
-                            <li>Streamlit</li>
-                            <li>Git/Bitbucket</li>
-                            <li>Docker</li>
-                            <li>PostgreSQL</li>
-                            <li>Azure ML</li>
-                        </ul>
-
                     </div>
 
                 </div>
@@ -1099,23 +1090,6 @@
                         </h3>
 
                         <p class="meta" data-i18n="exp2.meta">Dipendente · Brescia</p>
-
-                        <p data-i18n="exp2.desc">Analisi, sviluppo e manutenzione di software gestionale all'interno del reparto R&amp;D. Architetture Linux, Windows, Windows Mobile, Raspberry Pi, Arduino e IBM AS/400; IDE Netbeans, Eclipse, IntelliJ, TN5250j.</p>
-
-                        <ul class="tech">
-                            <li>Java 8</li>
-                            <li>Kotlin</li>
-                            <li>JSF2/Primefaces</li>
-                            <li>HTML/CSS/JS</li>
-                            <li>Git/Svn</li>
-                            <li>Jenkins</li>
-                            <li>Maven</li>
-                            <li>MySQL</li>
-                            <li>Docker</li>
-                            <li>RPG400</li>
-                            <li>IBM DB2/400</li>
-                        </ul>
-
                     </div>
 
                 </div>
@@ -1133,20 +1107,6 @@
                         </h3>
 
                         <p class="meta" data-i18n="exp3.meta">Libero professionista · Milano</p>
-
-                        <p data-i18n="exp3.desc">Analisi, sviluppo e manutenzione di software gestionale. Architetture Linux, Windows, Windows Mobile e IBM AS/400; IDE Netbeans e TN5250j.</p>
-
-                        <ul class="tech">
-                            <li>Visual Basic 6.0</li>
-                            <li>VBA</li>
-                            <li>Java 1.4.2/1.5</li>
-                            <li>MSAccess</li>
-                            <li>MSOffice</li>
-                            <li>SQLServer</li>
-                            <li>RPG/400</li>
-                            <li>IBM DB2/400</li>
-                        </ul>
-
                     </div>
 
                 </div>
@@ -1164,19 +1124,6 @@
                         </h3>
 
                         <p class="meta" data-i18n="exp4.meta">Libero professionista · Milano</p>
-
-                        <p data-i18n="exp4.desc">Analisi, sviluppo e manutenzione di software gestionale su architetture Windows e IBM AS/400.</p>
-
-                        <ul class="tech">
-                            <li>Visual Basic 6.0</li>
-                            <li>VBA</li>
-                            <li>MSAccess</li>
-                            <li>MSOffice</li>
-                            <li>SQLServer</li>
-                            <li>RPG/400</li>
-                            <li>IBM DB2/400</li>
-                        </ul>
-
                     </div>
 
                 </div>
@@ -1411,7 +1358,7 @@
                 "about.p1": "I am <span class='highlight'>Franco</span>, a professional with many years of experience in IT as a software analyst and developer, working on desktop and web applications.",
                 "about.p2": "I stand out for the wide range of skills built up over the years, working both on <span class='highlight'>projects</span> and on <span class='highlight'>products</span>: from ERP software on IBM AS/400 to modern web apps, through to the integration of artificial intelligence.",
                 "about.p3": "Strong interpersonal communication skills, a team player with a positive and proactive attitude to solving even complex problems.",
-                "about.p4": "<strong>Education:</strong> Electrical engineering technician \u2014 ITIS Magistri Cumacini, Como.<br /><strong>Languages:</strong> Italian (native), English (B2).<br /><strong>Interests:</strong> tech and coding, trekking, kickboxing, snowboarding, running, motorbikes, cycling, film and TV series, electric guitar, scuba diving.",
+                "about.p4": "<strong>Interests:</strong> tech and coding, trekking, kickboxing, snowboarding, running, motorbikes, cycling, film and TV series, electric guitar, scuba diving.",
 
                 "skills.title": "Skills",
                 "skills.languages": "Languages &amp; Frameworks",
@@ -1423,19 +1370,15 @@
                 "exp1.date": "May 2022 \u2014 Present",
                 "exp1.role": "Software analyst and developer",
                 "exp1.meta": "Employee \u00b7 Bergamo",
-                "exp1.desc": "Analysis, development and maintenance of software, with the integration of artificial intelligence solutions. Linux, Windows, MacOS and Raspberry Pi architectures; development in VSCode with AI (Claude Code).",
                 "exp2.date": "March 2004 \u2014 May 2022",
                 "exp2.role": "Software analyst and developer \u2014 R&amp;D",
                 "exp2.meta": "Employee \u00b7 Brescia",
-                "exp2.desc": "Analysis, development and maintenance of ERP software within the R&amp;D department. Linux, Windows, Windows Mobile, Raspberry Pi, Arduino and IBM AS/400 architectures; Netbeans, Eclipse, IntelliJ and TN5250j IDEs.",
                 "exp3.date": "February 2002 \u2014 February 2004",
                 "exp3.role": "Software analyst and developer",
                 "exp3.meta": "Freelance \u00b7 Milan",
-                "exp3.desc": "Analysis, development and maintenance of ERP software. Linux, Windows, Windows Mobile and IBM AS/400 architectures; Netbeans and TN5250j IDEs.",
                 "exp4.date": "January 1999 \u2014 January 2002",
                 "exp4.role": "Software analyst and developer",
                 "exp4.meta": "Freelance \u00b7 Milan",
-                "exp4.desc": "Analysis, development and maintenance of ERP software on Windows and IBM AS/400 architectures.",
 
                 "proj.title": "Projects",
                 "proj1.desc": "Mobile application for tracking body weight and nutrition with the support of artificial intelligence.",
