@@ -19,14 +19,6 @@
         "Helvetica Neue",
         Arial,
         sans-serif;
-
-    /* Font a pixel per il solo nome nell'hero. Il ripiego e' monospazio
-       cosi' la larghezza non cambia troppo se il webfont non arriva. */
-    --font-pixel:
-        "Press Start 2P",
-        ui-monospace,
-        "Courier New",
-        monospace;
 }
 
 * {
@@ -96,18 +88,13 @@ header {
 
 h1 {
     color: var(--white);
-    font-family: var(--font-pixel);
+    font-size: clamp(38px, 8vw, 72px);
 
-    /* Press Start 2P ha un solo peso (400) ed e' molto largo: circa un em
-       per carattere. Da qui la scala piu' contenuta rispetto a un font
-       proporzionale, altrimenti "franco parodi" sfonderebbe lo schermo. */
-    font-weight: 400;
-    font-size: clamp(19px, 5vw, 42px);
-
-    /* I glifi a pixel hanno bisogno di aria: niente crenatura negativa
-       e interlinea larga, o le righe si toccano. */
-    letter-spacing: 0;
-    line-height: 1.45;
+    /* Meno pesante del bold di default del browser: il peso 500 e' gia'
+       fra quelli richiesti a Ubuntu, non serve scaricare altro. */
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -2px;
     margin-bottom: 28px;
     overflow-wrap: break-word;
 }
@@ -767,6 +754,11 @@ RESPONSIVE
     header {
         min-height: 80vh;
         min-height: 80svh;
+
+        /* Il pulsante del menu e' fisso in alto a destra e arriva a 68px
+           (22 di distacco + 46 di altezza): senza questo spazio, su schermi
+           stretti il titolo dell'hero gli finisce sotto. */
+        padding-top: 88px;
         padding-bottom: 40px;
     }
 
