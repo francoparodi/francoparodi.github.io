@@ -118,6 +118,11 @@ COMPARSA IN DISSOLVENZA
 
 .js .fade-in {
     transform: translateY(14px);
+
+    /* Parte sfocato e si mette a fuoco mentre compare. Solo su .fade-in:
+       sulla nav (fixed) un filter cambierebbe il riferimento dei suoi
+       figli posizionati. */
+    filter: blur(12px);
 }
 
 /* La classe arriva dallo script, elemento per elemento: sull'hero appena
@@ -128,9 +133,11 @@ COMPARSA IN DISSOLVENZA
 .js .fade-soft.is-visible {
     opacity: 1;
     transform: none;
+    filter: none;
     transition:
-        opacity 0.7s ease,
-        transform 0.7s ease;
+        opacity 1.4s ease,
+        transform 1.4s ease,
+        filter 1.4s ease;
 }
 
 /* Sfasamento dentro l'hero: il resto del testo, poi la navigazione.
