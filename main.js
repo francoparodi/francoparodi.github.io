@@ -15,14 +15,11 @@
         "nav.projects": "Projects",
         "nav.contact": "Contact",
 
-        "hero.role": "Software analyst and developer",
-        "hero.intro": "For over twenty years I have been designing, developing and maintaining desktop and web applications, on Linux and Windows, today with a focus on Python, ReactJS and AI integration. Curious and passionate about technology and innovation, I am at ease working in a team, both on site and remotely.",
+        "hero.intro": "Full Stack Developer, passionate about innovation and technology, with software development skills on Linux and Windows environments.",
 
         "about.title": "About",
-        "about.p1": "I am <span class='highlight'>Franco</span>, a professional with many years of experience in IT as a software analyst and developer, working on desktop and web applications.",
-        "about.p2": "I stand out for the wide range of skills built up over the years, working both on <span class='highlight'>projects</span> and on <span class='highlight'>products</span>: from ERP software on IBM AS/400 to modern web apps, through to the integration of artificial intelligence.",
-        "about.p3": "Strong interpersonal communication skills, a team player with a positive and proactive attitude to solving even complex problems.",
-        "about.p4": "<strong>Interests:</strong> tech and coding, trekking, kickboxing, snowboarding, running, motorbikes, cycling, film and TV series, electric guitar, scuba diving.",
+        "about.p1": "I am <span class='highlight'>Franco</span>, an Analyst and Full Stack Developer with solid experience in developing desktop and web applications.<br>Along the way I have explored a variety of technologies, from enterprise software to modern web applications, up to artificial intelligence and the world of embedded systems, IoT and the interaction between software and the physical world.",
+        "about.p2": "Curious by nature, collaborative by conviction and always focused on innovation, I love to experiment, explore new technologies and turn ideas into concrete solutions.",
 
         "skills.title": "Skills",
         "skills.languages": "Languages &amp; Frameworks",
@@ -31,16 +28,19 @@
         "skills.envs": "Environments &amp; IDEs",
 
         "exp.title": "Experience",
-        "exp1.date": "May 2022 \u2014 Present",
+        "exp0.date": "November 2026 \u2014 Present",
+        "exp0.role": "Software development manager",
+        "exp0.meta": "Employee \u00b7 Brescia",
+        "exp1.date": "May 2022 \u2014 October 2026",
         "exp1.role": "Software analyst and developer",
         "exp1.meta": "Employee \u00b7 Bergamo",
-        "exp2.date": "March 2004 \u2014 May 2022",
+        "exp2.date": "March 2004 \u2014 April 2022",
         "exp2.role": "Software analyst and developer \u2014 R&amp;D",
         "exp2.meta": "Employee \u00b7 Brescia",
         "exp3.date": "February 2002 \u2014 February 2004",
         "exp3.role": "Software analyst and developer",
         "exp3.meta": "Freelance \u00b7 Milan",
-        "exp4.date": "January 1999 \u2014 January 2002",
+        "exp4.date": "January 1998 \u2014 January 2002",
         "exp4.role": "Software analyst and developer",
         "exp4.meta": "Freelance \u00b7 Milan",
 
@@ -52,11 +52,8 @@
         "proj5.desc": "Web app for controlling room temperature through a thermostat based on Raspberry Pi.",
         "proj6.desc": "Open source interpreter that runs RPG programs on the JVM: a project I contributed to at SmeUP.",
 
-        "contact.eyebrow": "What's next?",
-        "contact.title": "Let's work together.",
         "contact.text": "If you have an interesting project, or simply want to get in touch, drop me a line.",
-        "contact.button": "Say hello",
-        "contact.city": "Palazzolo sull'Oglio (BS), Italia"
+        "contact.button": "Say hello"
     };
 
     var nodes = document.querySelectorAll("[data-i18n]");

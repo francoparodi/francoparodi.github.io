@@ -77,12 +77,16 @@ header {
 }
 
 .hero {
-    max-width: 800px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 211px;
+    gap: 50px;
+    align-items: center;
 }
 
 .eyebrow {
     color: var(--accent);
-    font-size: 14px;
+    font-size: 18px;
     margin-bottom: 20px;
 }
 
@@ -182,9 +186,8 @@ h1.typing .caret {
 }
 
 .intro {
-    max-width: 620px;
     color: var(--text-light);
-    font-size: clamp(15px, 3.6vw, 17px);
+    font-size: clamp(19px, 4.4vw, 21px);
     margin-bottom: 35px;
 }
 
@@ -197,11 +200,18 @@ h1.typing .caret {
 
 .links a {
     color: var(--text);
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.links svg {
+    display: block;
+    width: 24px;
+    height: 24px;
 }
 
 .links a:hover {
     color: var(--accent);
+    transform: translateY(-3px);
 }
 
 /* =========================
@@ -220,7 +230,7 @@ nav ul {
     gap: 10px 25px;
     flex-wrap: wrap;
     list-style: none;
-    font-size: 13px;
+    font-size: clamp(19px, 4.4vw, 21px);
 }
 
 /* =========================
@@ -370,6 +380,13 @@ section {
     scroll-snap-align: center;
 }
 
+#about {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+}
+
 .section-title {
     display: flex;
     align-items: center;
@@ -398,15 +415,12 @@ ABOUT
 
 .about-grid {
     display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 50px;
-    align-items: start;
+    grid-template-columns: 1fr;
 }
 
 .about {
-    max-width: 750px;
     color: var(--text-light);
-    font-size: clamp(15px, 3.6vw, 17px);
+    font-size: clamp(19px, 4.4vw, 21px);
 }
 
 .about p {
@@ -422,11 +436,7 @@ ABOUT
 }
 
 .photo-frame {
-    border: 1px solid var(--border);
-    /* Cornice circolare attorno alla foto. */
     border-radius: 50%;
-    padding: 8px;
-    background: var(--bg-light);
 }
 
 .photo {
@@ -477,7 +487,7 @@ TECH TAGS
     color: var(--accent);
     padding: 5px 10px;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 /* =========================
@@ -486,7 +496,7 @@ EXPERIENCE
 
 .experience {
     display: grid;
-    grid-template-columns: 190px 1fr;
+    grid-template-columns: 290px 1fr;
     gap: 30px;
     margin-bottom: 55px;
 }
@@ -497,7 +507,7 @@ EXPERIENCE
 
 .date {
     color: var(--text-light);
-    font-size: 13px;
+    font-size: 17px;
     padding-top: 5px;
 }
 
@@ -513,7 +523,7 @@ EXPERIENCE
 
 .job .meta {
     color: var(--text-light);
-    font-size: 13px;
+    font-size: 17px;
     margin-bottom: 15px;
 }
 
@@ -524,7 +534,7 @@ EXPERIENCE
 
 .job p {
     color: var(--text-light);
-    font-size: clamp(14px, 3.5vw, 16px);
+    font-size: clamp(18px, 4.3vw, 20px);
     margin-bottom: 18px;
     max-width: 700px;
 }
@@ -579,7 +589,7 @@ PROJECTS
 .project-links {
     display: flex;
     gap: 15px;
-    font-size: 13px;
+    font-size: 17px;
     color: var(--text-light);
 }
 
@@ -595,7 +605,7 @@ PROJECTS
 
 .project p {
     color: var(--text-light);
-    font-size: 15px;
+    font-size: 19px;
     margin-bottom: 20px;
     flex-grow: 1;
 }
@@ -622,7 +632,7 @@ CONTACT
 
 .contact>p {
     color: var(--text-light);
-    font-size: clamp(15px, 3.6vw, 17px);
+    font-size: clamp(19px, 4.4vw, 21px);
     margin-bottom: 30px;
 }
 
@@ -644,7 +654,7 @@ CONTACT
     justify-content: center;
     gap: 12px 25px;
     flex-wrap: wrap;
-    font-size: 13px;
+    font-size: 17px;
     color: var(--text-light);
     margin-top: 40px;
 }
@@ -670,7 +680,7 @@ footer {
     scroll-snap-align: end;
     padding: 40px 20px;
     color: var(--text-light);
-    font-size: 12px;
+    font-size: 16px;
 }
 
 /* =========================
@@ -731,7 +741,7 @@ RESPONSIVE
 
     nav ul {
         display: block;
-        font-size: 15px;
+        font-size: 19px;
     }
 
     nav li+li {
@@ -751,7 +761,11 @@ RESPONSIVE
 
     .lang-switch button {
         padding: 6px 8px;
-        font-size: 15px;
+        font-size: 19px;
+    }
+
+    #about {
+        min-height: 0;
     }
 
     header {
@@ -778,13 +792,13 @@ RESPONSIVE
         max-width: 80px;
     }
 
-    .about-grid {
+    .hero {
         grid-template-columns: 1fr;
         gap: 35px;
     }
 
     .photo-frame {
-        width: min(260px, 70vw);
+        width: min(178px, 49vw);
     }
 
     .experience {
