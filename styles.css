@@ -935,7 +935,7 @@ INTERRUTTORE EFFETTI CRT
     /* Centro a 55px dall'alto, come le voci del menu (che partono da 35px
        e sono alte circa 40px). */
     top: 32px;
-    left: 5%;
+    left: 3%;
     z-index: 10000;
     width: 46px;
     height: 46px;
@@ -945,13 +945,15 @@ INTERRUTTORE EFFETTI CRT
     justify-content: center;
     border: none;
     background: none;
-    color: var(--accent);
+    color: var(--text-light);
     cursor: pointer;
-    transition: color 0.2s ease, transform 0.2s ease;
+    transition: color 0.2s ease;
 }
 
-.crt-toggle:hover {
-    transform: translateY(-2px);
+/* Come le voci del menu: grigio a riposo, verde-acqua al passaggio. */
+.crt-toggle:hover,
+.crt-toggle:focus-visible {
+    color: var(--accent);
 }
 
 .crt-toggle svg {
@@ -962,10 +964,6 @@ INTERRUTTORE EFFETTI CRT
 /* La barra obliqua compare solo con gli effetti spenti. */
 .crt-slash {
     display: none;
-}
-
-.crt-off .crt-toggle {
-    color: var(--text-light);
 }
 
 .crt-off .crt-slash {

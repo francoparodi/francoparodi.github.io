@@ -263,14 +263,15 @@
         }
     }
 
-    /* Rete di sicurezza: se la digitazione non arriva in fondo, dopo quattro
-       secondi il contenuto compare comunque, tutto insieme. */
+    /* Rete di sicurezza: se la digitazione non arriva in fondo, dopo otto
+       secondi (l'attesa del cursore piu' la scrittura) il contenuto compare
+       comunque, tutto insieme. */
     var failsafe = window.setTimeout(function () {
         show(nav);
         show(heroText);
         show(sections);
         show(footer);
-    }, 4000);
+    }, 8000);
 
     function watch(nodes, rootMargin) {
         if (!window.IntersectionObserver) {
@@ -338,11 +339,13 @@
     }
 
     typed.textContent = "";
-    title.classList.add("typing");
 
     var i = 0;
 
     function step() {
+        /* Il cursore lampeggia da solo durante l'attesa iniziale e resta
+           fisso solo da quando comincia a scrivere. */
+        title.classList.add("typing");
         i += 1;
         typed.textContent = text.slice(0, i);
 
@@ -357,7 +360,9 @@
         }
     }
 
-    window.setTimeout(step, 350);
+    /* Tre secondi con il solo cursore che lampeggia, prima di
+       cominciare a scrivere. */
+    window.setTimeout(step, 3000);
 })();
 
 /* Alone chiaro che insegue il puntatore. */
