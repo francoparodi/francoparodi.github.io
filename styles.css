@@ -68,23 +68,38 @@ a {
 EFFETTO CRT
 ========================= */
 
-/* Scanlines solo sul nome nell'hero: righe scure sottili ripetute ogni
-   4px sopra il testo, come su un vecchio schermo a tubo catodico. Lo
-   strato non intercetta i click. */
-h1 {
-    position: relative;
-}
-
-h1::after {
+/* Scanlines su tutta la pagina: strato fisso sopra il contenuto, che non
+   intercetta i click, con righe scure sottili ripetute ogni 4px come su
+   un vecchio schermo a tubo catodico. */
+body::after {
     content: "";
-    position: absolute;
+    position: fixed;
     inset: 0;
+    z-index: 100;
     pointer-events: none;
     background: repeating-linear-gradient(to bottom,
-            rgba(10, 25, 47, 0) 0,
-            rgba(10, 25, 47, 0) 2px,
-            rgba(10, 25, 47, 0.6) 3px,
-            rgba(10, 25, 47, 0) 4px);
+            rgba(0, 0, 0, 0) 0,
+            rgba(0, 0, 0, 0) 2px,
+            rgba(0, 0, 0, 0.6) 3px,
+            rgba(0, 0, 0, 0) 4px);
+}
+
+/* =========================
+DISTURBO VHS
+========================= */
+
+/* Overlay a schermo intero disegnato da glitch.js. Con "screen" il nero
+   non cambia nulla: si vede solo la parte luminosa del disturbo. Non
+   intercetta i click. */
+#vhs-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    image-rendering: pixelated;
 }
 
 /* =========================
@@ -724,6 +739,11 @@ RESPONSIVE
         display: block;
     }
 
+    /* Sul telefono il riferimento e' il pulsante del menu, a 22px. */
+    .crt-toggle {
+        top: 22px;
+    }
+
     .nav-overlay {
         display: block;
         position: fixed;
@@ -900,4 +920,59 @@ RESPONSIVE
     .cursor-glow {
         display: none;
     }
+}
+
+/* =========================
+INTERRUTTORE EFFETTI CRT
+========================= */
+
+/* Icona di un televisore a tubo catodico in alto a sinistra: attiva e
+   disattiva insieme scanlines e disturbo. Sopra gli effetti, cosi' resta
+   sempre leggibile e cliccabile. */
+.crt-toggle {
+    position: fixed;
+
+    /* Centro a 55px dall'alto, come le voci del menu (che partono da 35px
+       e sono alte circa 40px). */
+    top: 32px;
+    left: 5%;
+    z-index: 10000;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    color: var(--accent);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.crt-toggle:hover {
+    transform: translateY(-2px);
+}
+
+.crt-toggle svg {
+    width: 26px;
+    height: 26px;
+}
+
+/* La barra obliqua compare solo con gli effetti spenti. */
+.crt-slash {
+    display: none;
+}
+
+.crt-off .crt-toggle {
+    color: var(--text-light);
+}
+
+.crt-off .crt-slash {
+    display: block;
+}
+
+.crt-off body::after,
+.crt-off #vhs-overlay {
+    display: none;
 }
