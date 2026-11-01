@@ -65,6 +65,30 @@ a {
 }
 
 /* =========================
+EFFETTO CRT
+========================= */
+
+/* Strato fisso sopra tutta la pagina, che non intercetta i click: righe
+   scure sottili ripetute ogni 4px (le scanlines) e una leggera
+   vignettatura ai bordi, come lo schermo curvo di un vecchio televisore. */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(to bottom,
+            rgba(0, 0, 0, 0) 0,
+            rgba(0, 0, 0, 0) 2px,
+            rgba(0, 0, 0, 0.6) 3px,
+            rgba(0, 0, 0, 0) 4px),
+        radial-gradient(ellipse at center,
+            rgba(0, 0, 0, 0) 35%,
+            rgba(0, 0, 0, 0.8) 100%);
+}
+
+/* =========================
 HEADER
 ========================= */
 
@@ -86,14 +110,14 @@ header {
 
 .eyebrow {
     color: var(--accent);
-    font-size: 18px;
+    font-size: 21.8px;
     margin-bottom: 20px;
 }
 
 h1 {
     /* Stesso verde-acqua del cursore che lampeggia accanto (#64ffda). */
     color: var(--accent);
-    font-size: clamp(38px, 8vw, 72px);
+    font-size: clamp(46px, 8vw, 87.1px);
 
     /* Meno pesante del bold di default del browser: il peso 500 e' gia'
        fra quelli richiesti a Ubuntu, non serve scaricare altro. */
@@ -187,14 +211,14 @@ h1.typing .caret {
 
 .role {
     color: var(--text-light);
-    font-size: clamp(20px, 4vw, 34px);
+    font-size: clamp(24.2px, 4vw, 41.1px);
     font-weight: 500;
     margin-bottom: 25px;
 }
 
 .intro {
     color: var(--text-light);
-    font-size: clamp(19px, 4.4vw, 21px);
+    font-size: clamp(23px, 4.4vw, 25.4px);
     margin-bottom: 35px;
 }
 
@@ -202,7 +226,7 @@ h1.typing .caret {
     display: flex;
     gap: 15px 25px;
     flex-wrap: wrap;
-    font-size: 14px;
+    font-size: 16.9px;
 }
 
 .links a {
@@ -237,7 +261,7 @@ nav ul {
     gap: 10px 25px;
     flex-wrap: wrap;
     list-style: none;
-    font-size: clamp(19px, 4.4vw, 21px);
+    font-size: clamp(23px, 4.4vw, 25.4px);
 }
 
 /* =========================
@@ -403,7 +427,7 @@ section {
 
 h2 {
     color: var(--white);
-    font-size: clamp(21px, 5vw, 28px);
+    font-size: clamp(25.4px, 5vw, 33.9px);
 }
 
 /* Linea che riempie lo spazio residuo, senza sfondare. */
@@ -427,7 +451,7 @@ ABOUT
 
 .about {
     color: var(--text-light);
-    font-size: clamp(19px, 4.4vw, 21px);
+    font-size: clamp(23px, 4.4vw, 25.4px);
 }
 
 .about p {
@@ -474,7 +498,7 @@ SKILLS
 
 .skill-card h3 {
     color: var(--white);
-    font-size: 16px;
+    font-size: 19.4px;
     margin-bottom: 15px;
 }
 
@@ -494,7 +518,7 @@ TECH TAGS
     color: var(--accent);
     padding: 5px 10px;
     border-radius: 3px;
-    font-size: 16px;
+    font-size: 19.4px;
 }
 
 /* =========================
@@ -514,13 +538,13 @@ EXPERIENCE
 
 .date {
     color: var(--text-light);
-    font-size: 17px;
+    font-size: 20.6px;
     padding-top: 5px;
 }
 
 .job h3 {
     color: var(--white);
-    font-size: clamp(17px, 4.2vw, 20px);
+    font-size: clamp(20.6px, 4.2vw, 24.2px);
     margin-bottom: 5px;
 }
 
@@ -530,7 +554,7 @@ EXPERIENCE
 
 .job .meta {
     color: var(--text-light);
-    font-size: 17px;
+    font-size: 20.6px;
     margin-bottom: 15px;
 }
 
@@ -541,7 +565,7 @@ EXPERIENCE
 
 .job p {
     color: var(--text-light);
-    font-size: clamp(18px, 4.3vw, 20px);
+    font-size: clamp(21.8px, 4.3vw, 24.2px);
     margin-bottom: 18px;
     max-width: 700px;
 }
@@ -596,7 +620,7 @@ PROJECTS
 .project-links {
     display: flex;
     gap: 15px;
-    font-size: 17px;
+    font-size: 20.6px;
     color: var(--text-light);
 }
 
@@ -606,13 +630,13 @@ PROJECTS
 
 .project h3 {
     color: var(--white);
-    font-size: 19px;
+    font-size: 23px;
     margin-bottom: 10px;
 }
 
 .project p {
     color: var(--text-light);
-    font-size: 19px;
+    font-size: 23px;
     margin-bottom: 20px;
     flex-grow: 1;
 }
@@ -633,13 +657,13 @@ CONTACT
 }
 
 .contact h2 {
-    font-size: clamp(30px, 6vw, 52px);
+    font-size: clamp(36.3px, 6vw, 62.9px);
     margin-bottom: 20px;
 }
 
 .contact>p {
     color: var(--text-light);
-    font-size: clamp(19px, 4.4vw, 21px);
+    font-size: clamp(23px, 4.4vw, 25.4px);
     margin-bottom: 30px;
 }
 
@@ -661,7 +685,7 @@ CONTACT
     justify-content: center;
     gap: 12px 25px;
     flex-wrap: wrap;
-    font-size: 17px;
+    font-size: 20.6px;
     color: var(--text-light);
     margin-top: 40px;
 }
@@ -687,7 +711,7 @@ footer {
     scroll-snap-align: end;
     padding: 40px 20px;
     color: var(--text-light);
-    font-size: 16px;
+    font-size: 19.4px;
 }
 
 /* =========================
@@ -748,7 +772,7 @@ RESPONSIVE
 
     nav ul {
         display: block;
-        font-size: 19px;
+        font-size: 23px;
     }
 
     nav li+li {
@@ -768,7 +792,7 @@ RESPONSIVE
 
     .lang-switch button {
         padding: 6px 8px;
-        font-size: 19px;
+        font-size: 23px;
     }
 
     #about {
