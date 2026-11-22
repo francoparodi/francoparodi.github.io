@@ -1,13 +1,11 @@
 (function () {
     "use strict";
 
-    /* L'italiano e' il testo gia' presente nell'HTML ed e' la lingua
-       predefinita: qui c'e' solo l'inglese. Le stringhe possono contenere
-       markup, viene inserito con innerHTML. */
     var EN = {
         "meta.title": "Franco Parodi \u2014 Software Analyst and Developer",
         "meta.description": "Personal portfolio of Franco Parodi, software analyst and developer with many years of experience in desktop and web applications.",
 
+        "nav.skip": "Skip to content",
         "nav.home": "127.0.0.1",
         "nav.about": "About",
         "nav.skills": "Skills",
@@ -60,7 +58,6 @@
     var buttons = document.querySelectorAll("[data-lang-btn]");
     var meta = document.querySelector('meta[name="description"]');
 
-    /* Testo italiano originale, cosi' il ritorno a IT non ha bisogno di dizionario. */
     var IT = {};
     var i;
     for (i = 0; i < nodes.length; i++) {
@@ -92,12 +89,10 @@
         try {
             localStorage.setItem("lang", lang);
         } catch (e) {
-            /* localStorage non disponibile: la scelta vale solo per questa visita. */
+
         }
     }
 
-    /* Lingua predefinita: italiano. Si passa all'inglese solo se il
-       visitatore lo ha gia' scelto in una visita precedente. */
     var saved = null;
     try {
         saved = localStorage.getItem("lang");
@@ -116,7 +111,6 @@
     }
 })();
 
-/* Menu laterale a scomparsa sui telefoni. */
 (function () {
     "use strict";
 
@@ -176,7 +170,6 @@
         close(true);
     });
 
-    /* Un tocco su una voce porta alla sezione e richiude il pannello. */
     nav.addEventListener("click", function (event) {
         if (event.target.closest("a")) {
             close(false);
@@ -197,7 +190,6 @@
             return;
         }
 
-        /* Finche' il pannello e' aperto il focus resta al suo interno. */
         var items = focusable();
         if (!items.length) {
             return;
@@ -215,14 +207,12 @@
         }
     });
 
-    /* Tornando alla larghezza desktop il pannello non ha piu' senso. */
     window.addEventListener("resize", function () {
         if (isOpen() && window.innerWidth > 768) {
             close(false);
         }
     });
 
-    /* L'etichetta segue la lingua scelta nel selettore IT/EN. */
     var langButtons = document.querySelectorAll("[data-lang-btn]");
     var b;
     for (b = 0; b < langButtons.length; b++) {
@@ -237,21 +227,14 @@
     toggle.setAttribute("aria-label", labels().open);
 })();
 
-/* Il titolo si scrive da solo a ogni caricamento della pagina. A digitazione
-   finita entra in dissolvenza il resto della pagina, e da li' in poi ogni
-   blocco sfuma dentro e fuori ogni volta che entra o esce dallo schermo,
-   scorrendo in su come in giu'. */
 (function () {
     "use strict";
 
     var title = document.querySelector("h1");
     var typed = title && title.querySelector(".typed");
 
-    /* La navigazione e' fissa: resta sempre in campo, quindi non ha senso
-       farla sfumare a ogni scorrimento. Entra una volta e basta. */
     var nav = document.querySelectorAll(".fade-soft");
 
-    /* Tutto il resto sfuma ogni volta, in entrambe le direzioni. */
     var heroText = document.querySelectorAll(".hero .fade-in");
     var sections = document.querySelectorAll("section.fade-in");
     var footer = document.querySelectorAll("footer.fade-in");
@@ -263,9 +246,6 @@
         }
     }
 
-    /* Rete di sicurezza: se la digitazione non arriva in fondo, dopo otto
-       secondi (l'attesa del cursore piu' la scrittura) il contenuto compare
-       comunque, tutto insieme. */
     var failsafe = window.setTimeout(function () {
         show(nav);
         show(heroText);
@@ -275,7 +255,7 @@
 
     function watch(nodes, rootMargin) {
         if (!window.IntersectionObserver) {
-            /* Browser senza observer: meglio tutto visibile che niente. */
+
             show(nodes);
             return;
         }
@@ -284,8 +264,7 @@
             var i, entry;
             for (i = 0; i < entries.length; i++) {
                 entry = entries[i];
-                /* Nessun unobserve: l'elemento va e viene, cosi' la
-                   dissolvenza si ripete a ogni passaggio. */
+
                 if (entry.isIntersecting) {
                     entry.target.classList.add("is-visible");
                 } else {
@@ -304,14 +283,9 @@
         window.clearTimeout(failsafe);
         show(nav);
 
-        /* Il margine negativo in basso fa partire la dissolvenza quando il
-           blocco e' entrato per davvero, non appena sfiora il bordo. */
         watch(heroText, "0px 0px -15% 0px");
         watch(sections, "0px 0px -15% 0px");
 
-        /* Il footer e' alto poche decine di pixel e sta in fondo alla pagina:
-           con lo stesso margine negativo resterebbe sempre dentro la fascia
-           esclusa e non comparirebbe mai, nemmeno a pagina scorsa in fondo. */
         watch(footer, "0px");
     }
 
@@ -330,8 +304,6 @@
 
     var text = typed.textContent;
 
-    /* Chi ha chiesto meno animazioni vede subito titolo e contenuto, senza
-       nemmeno la comparsa a scorrimento. */
     if (window.matchMedia &&
         window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         revealAll();
@@ -343,29 +315,24 @@
     var i = 0;
 
     function step() {
-        /* Il cursore lampeggia da solo durante l'attesa iniziale e resta
-           fisso solo da quando comincia a scrivere. */
+
         title.classList.add("typing");
         i += 1;
         typed.textContent = text.slice(0, i);
 
         if (i < text.length) {
-            /* Ritmo irregolare: una digitazione a intervalli fissi
-               si riconosce subito come finta. */
+
             window.setTimeout(step, 55 + Math.random() * 85);
         } else {
             title.classList.remove("typing");
-            /* Breve pausa a titolo finito, poi entra il resto. */
+
             window.setTimeout(reveal, 220);
         }
     }
 
-    /* Tre secondi con il solo cursore che lampeggia, prima di
-       cominciare a scrivere. */
     window.setTimeout(step, 3000);
 })();
 
-/* Alone chiaro che insegue il puntatore. */
 (function () {
     "use strict";
 
@@ -375,7 +342,6 @@
         return;
     }
 
-    /* Niente alone sui touch o per chi ha chiesto meno animazioni. */
     if (window.matchMedia("(hover: none)").matches ||
         window.matchMedia("(pointer: coarse)").matches ||
         window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -389,8 +355,6 @@
     var started = false;
     var pending = false;
 
-    /* L'alone insegue il puntatore con un filo di ritardo:
-       il movimento risulta piu' morbido di un aggancio secco. */
     function frame() {
         pending = false;
 
@@ -418,8 +382,7 @@
         targetY = event.clientY;
 
         if (!started) {
-            /* Al primo movimento parte gia' sotto al puntatore,
-               senza attraversare la pagina. */
+
             started = true;
             x = targetX;
             y = targetY;

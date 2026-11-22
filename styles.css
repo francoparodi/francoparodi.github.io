@@ -1,4 +1,6 @@
 :root {
+    color-scheme: dark;
+
     --bg: #0a192f;
     --bg-light: #112240;
     --text: #ccd6f6;
@@ -7,9 +9,8 @@
     --accent: #64ffda;
     --border: rgba(100, 255, 218, 0.12);
 
-    /* Ubuntu per tutto il sito; i fallback coprono il caso in cui il
-       webfont non arrivi (rete lenta, blocco di terze parti). */
     --font:
+        "Doto",
         "Ubuntu",
         "Ubuntu Sans",
         -apple-system,
@@ -21,31 +22,63 @@
         sans-serif;
 }
 
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+}
+
+* {
     margin: 0;
     padding: 0;
+    text-shadow: 0 0 6px color-mix(in srgb, currentColor 55%, transparent);
 }
 
 html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
-
-    /* Scroll "a scatto": arrivati vicino a una sezione, la pagina si
-       posiziona da sola. "proximity" e non "mandatory", cosi' le
-       sezioni piu' alte dello schermo restano libere di scorrere. */
     scroll-snap-type: y proximity;
 }
 
-body {
-    /* Ubuntu ovunque: tutto il resto eredita da qui. */
-    font-family: var(--font);
+h1,
+h2,
+h3 {
+    text-shadow:
+        -1px 0 rgba(255, 0, 80, 0.45),
+        1px 0 rgba(0, 220, 255, 0.45),
+        0 0 10px color-mix(in srgb, currentColor 70%, transparent);
+}
 
+@keyframes crt-flicker {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    92% {
+        opacity: 1;
+    }
+
+    93% {
+        opacity: 0.94;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    97% {
+        opacity: 0.97;
+    }
+}
+
+body {
+    animation: crt-flicker 4s infinite;
+    font-family: var(--font);
+    font-variation-settings: "ROND" 100;
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
-
-    /* Nessuno scroll orizzontale su schermi stretti. */
     overflow-x: hidden;
 }
 
@@ -59,52 +92,33 @@ a {
     text-decoration: none;
 }
 
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+.skip-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 100;
+    padding: 10px 16px;
+    background: var(--bg-light);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+    transform: none;
+}
+
 .container {
     width: min(1100px, 90%);
     margin: 0 auto;
 }
-
-/* =========================
-EFFETTO CRT
-========================= */
-
-/* Scanlines su tutta la pagina: strato fisso sopra il contenuto, che non
-   intercetta i click, con righe scure sottili ripetute ogni 4px come su
-   un vecchio schermo a tubo catodico. */
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    pointer-events: none;
-    background: repeating-linear-gradient(to bottom,
-            rgba(0, 0, 0, 0) 0,
-            rgba(0, 0, 0, 0) 2px,
-            rgba(0, 0, 0, 0.6) 3px,
-            rgba(0, 0, 0, 0) 4px);
-}
-
-/* =========================
-DISTURBO VHS
-========================= */
-
-/* Overlay a schermo intero disegnato da glitch.js. Con "screen" il nero
-   non cambia nulla: si vede solo la parte luminosa del disturbo. Non
-   intercetta i click. */
-#vhs-overlay {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    pointer-events: none;
-    mix-blend-mode: screen;
-    image-rendering: pixelated;
-}
-
-/* =========================
-HEADER
-========================= */
 
 header {
     min-height: 100vh;
@@ -122,33 +136,16 @@ header {
     align-items: center;
 }
 
-.eyebrow {
-    color: var(--accent);
-    font-size: 21.8px;
-    margin-bottom: 20px;
-}
-
 h1 {
-    /* Stesso verde-acqua del cursore che lampeggia accanto (#64ffda). */
     color: var(--accent);
-    font-size: clamp(46px, 8vw, 87.1px);
-
-    /* Meno pesante del bold di default del browser: il peso 500 e' gia'
-       fra quelli richiesti a Ubuntu, non serve scaricare altro. */
+    font-size: clamp(2.79rem, 8vw, 5.29rem);
     font-weight: 500;
     line-height: 1.05;
-    letter-spacing: -2px;
+    letter-spacing: -0.025em;
     margin-bottom: 28px;
     overflow-wrap: break-word;
 }
 
-/* =========================
-COMPARSA IN DISSOLVENZA
-========================= */
-
-/* Le regole valgono solo con la classe "js" sulla radice, messa dallo
-   script: senza JavaScript il contenuto e' visibile da subito invece
-   di restare invisibile per sempre. */
 .js .fade-in,
 .js .fade-soft {
     opacity: 0;
@@ -156,17 +153,9 @@ COMPARSA IN DISSOLVENZA
 
 .js .fade-in {
     transform: translateY(14px);
-
-    /* Parte sfocato e si mette a fuoco mentre compare. Solo su .fade-in:
-       sulla nav (fixed) un filter cambierebbe il riferimento dei suoi
-       figli posizionati. */
     filter: blur(12px);
 }
 
-/* La classe arriva dallo script, elemento per elemento: sull'hero appena
-   il titolo ha finito di scriversi, sulle sezioni quando entrano in campo
-   scorrendo. La nav e' esclusa dallo spostamento perche' sotto i 768px usa
-   gia' una transform per entrare da destra, e le due si annullerebbero. */
 .js .fade-in.is-visible,
 .js .fade-soft.is-visible {
     opacity: 1;
@@ -178,9 +167,6 @@ COMPARSA IN DISSOLVENZA
         filter 1.4s ease;
 }
 
-/* Sfasamento dentro l'hero: il resto del testo, poi la navigazione.
-   Le sezioni non hanno ritardo: comparendo una alla volta mentre si
-   scorre, un'attesa in piu' si sentirebbe come lentezza. */
 .js .intro.is-visible {
     transition-delay: 0.12s;
 }
@@ -193,14 +179,11 @@ COMPARSA IN DISSOLVENZA
     transition-delay: 0.36s;
 }
 
-/* Mentre il titolo si scrive il cursore resta fisso: lampeggia
-   solo a digitazione finita, come in un terminale vero. */
 h1.typing .caret {
     animation: none;
     opacity: 1;
 }
 
-/* Cursore lampeggiante di fianco al titolo, come in un terminale. */
 .caret {
     display: inline-block;
     width: 0.5em;
@@ -212,7 +195,6 @@ h1.typing .caret {
 }
 
 @keyframes caret-blink {
-
     0%,
     100% {
         opacity: 1;
@@ -223,16 +205,9 @@ h1.typing .caret {
     }
 }
 
-.role {
-    color: var(--text-light);
-    font-size: clamp(24.2px, 4vw, 41.1px);
-    font-weight: 500;
-    margin-bottom: 25px;
-}
-
 .intro {
     color: var(--text-light);
-    font-size: clamp(23px, 4.4vw, 25.4px);
+    font-size: clamp(1.39rem, 4.4vw, 1.54rem);
     margin-bottom: 35px;
 }
 
@@ -240,7 +215,7 @@ h1.typing .caret {
     display: flex;
     gap: 15px 25px;
     flex-wrap: wrap;
-    font-size: 16.9px;
+    font-size: 1.03rem;
 }
 
 .links a {
@@ -259,10 +234,6 @@ h1.typing .caret {
     transform: translateY(-3px);
 }
 
-/* =========================
-NAVIGATION
-========================= */
-
 nav {
     position: fixed;
     top: 35px;
@@ -270,21 +241,33 @@ nav {
     z-index: 25;
 }
 
+@media (min-width: 769px) {
+    html {
+        scroll-padding-top: 90px;
+    }
+
+    nav {
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 20px 5%;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+    }
+
+    nav ul {
+        justify-content: flex-end;
+    }
+}
+
 nav ul {
     display: flex;
     gap: 10px 25px;
     flex-wrap: wrap;
     list-style: none;
-    font-size: clamp(23px, 4.4vw, 25.4px);
+    font-size: clamp(1.39rem, 4.4vw, 1.54rem);
 }
 
-/* =========================
-ALONE DEL MOUSE
-========================= */
-
-/* Chiazza di luce che segue il puntatore. Sta sopra a tutto ma
-   non intercetta i click, e resta abbastanza tenue da non
-   disturbare la lettura. */
 .cursor-glow {
     position: fixed;
     top: 0;
@@ -305,17 +288,13 @@ body.glow-on .cursor-glow {
     opacity: 1;
 }
 
-/* Solo dove c'e' davvero un puntatore: sui touch non serve. */
 @media (hover: none),
 (pointer: coarse) {
-
     .cursor-glow {
         display: none;
     }
 }
 
-/* Bottone hamburger e velo: servono solo sotto i 768px,
-   sul desktop restano fuori dal flusso. */
 .nav-toggle,
 .nav-overlay {
     display: none;
@@ -384,7 +363,6 @@ nav a:focus-visible {
     color: var(--accent);
 }
 
-/* Selettore di lingua nella navigazione. */
 .lang-switch {
     display: flex;
     align-items: center;
@@ -416,10 +394,6 @@ nav a:focus-visible {
     opacity: 0.5;
 }
 
-/* =========================
-SECTIONS
-========================= */
-
 section {
     padding: 100px 0;
     scroll-snap-align: center;
@@ -441,10 +415,9 @@ section {
 
 h2 {
     color: var(--white);
-    font-size: clamp(25.4px, 5vw, 33.9px);
+    font-size: clamp(1.54rem, 5vw, 2.06rem);
 }
 
-/* Linea che riempie lo spazio residuo, senza sfondare. */
 .section-title::after {
     content: "";
     flex: 1 1 0;
@@ -454,10 +427,6 @@ h2 {
     background: var(--border);
 }
 
-/* =========================
-ABOUT
-========================= */
-
 .about-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -465,7 +434,7 @@ ABOUT
 
 .about {
     color: var(--text-light);
-    font-size: clamp(23px, 4.4vw, 25.4px);
+    font-size: clamp(1.39rem, 4.4vw, 1.54rem);
 }
 
 .about p {
@@ -486,17 +455,11 @@ ABOUT
 
 .photo {
     width: 100%;
-    /* Quadrata a prescindere dall'immagine, poi ritagliata a cerchio. */
+    height: auto;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 50%;
-    /* Sempre in bianco e nero, anche al passaggio del mouse. */
-    filter: grayscale(100%) contrast(1.05);
 }
-
-/* =========================
-SKILLS
-========================= */
 
 .skills {
     display: grid;
@@ -512,13 +475,9 @@ SKILLS
 
 .skill-card h3 {
     color: var(--white);
-    font-size: 19.4px;
+    font-size: 1.18rem;
     margin-bottom: 15px;
 }
-
-/* =========================
-TECH TAGS
-========================= */
 
 .tech {
     display: flex;
@@ -532,12 +491,8 @@ TECH TAGS
     color: var(--accent);
     padding: 5px 10px;
     border-radius: 3px;
-    font-size: 19.4px;
+    font-size: 1.18rem;
 }
-
-/* =========================
-EXPERIENCE
-========================= */
 
 .experience {
     display: grid;
@@ -552,13 +507,13 @@ EXPERIENCE
 
 .date {
     color: var(--text-light);
-    font-size: 20.6px;
+    font-size: 1.25rem;
     padding-top: 5px;
 }
 
 .job h3 {
     color: var(--white);
-    font-size: clamp(20.6px, 4.2vw, 24.2px);
+    font-size: clamp(1.25rem, 4.2vw, 1.47rem);
     margin-bottom: 5px;
 }
 
@@ -568,25 +523,20 @@ EXPERIENCE
 
 .job .meta {
     color: var(--text-light);
-    font-size: 20.6px;
+    font-size: 1.25rem;
     margin-bottom: 15px;
 }
 
-/* Senza descrizione sotto, il margine resterebbe appeso nel vuoto. */
 .job .meta:last-child {
     margin-bottom: 0;
 }
 
 .job p {
     color: var(--text-light);
-    font-size: clamp(21.8px, 4.3vw, 24.2px);
+    font-size: clamp(1.32rem, 4.3vw, 1.47rem);
     margin-bottom: 18px;
     max-width: 700px;
 }
-
-/* =========================
-PROJECTS
-========================= */
 
 .projects {
     display: grid;
@@ -618,8 +568,6 @@ PROJECTS
     margin-bottom: 25px;
 }
 
-/* Icone dei progetti: tratto piatto, stesso spessore per tutte,
-   nessun riempimento ne' sfumatura. */
 .project-icon {
     display: flex;
     color: var(--accent);
@@ -634,7 +582,7 @@ PROJECTS
 .project-links {
     display: flex;
     gap: 15px;
-    font-size: 20.6px;
+    font-size: 1.25rem;
     color: var(--text-light);
 }
 
@@ -644,20 +592,16 @@ PROJECTS
 
 .project h3 {
     color: var(--white);
-    font-size: 23px;
+    font-size: 1.39rem;
     margin-bottom: 10px;
 }
 
 .project p {
     color: var(--text-light);
-    font-size: 23px;
+    font-size: 1.39rem;
     margin-bottom: 20px;
     flex-grow: 1;
 }
-
-/* =========================
-CONTACT
-========================= */
 
 .contact {
     text-align: center;
@@ -666,18 +610,14 @@ CONTACT
     padding: 120px 0;
 }
 
-.contact .eyebrow {
-    margin-bottom: 15px;
-}
-
 .contact h2 {
-    font-size: clamp(36.3px, 6vw, 62.9px);
+    font-size: clamp(2.21rem, 6vw, 3.83rem);
     margin-bottom: 20px;
 }
 
 .contact>p {
     color: var(--text-light);
-    font-size: clamp(23px, 4.4vw, 25.4px);
+    font-size: clamp(1.39rem, 4.4vw, 1.54rem);
     margin-bottom: 30px;
 }
 
@@ -694,54 +634,17 @@ CONTACT
     background: rgba(100, 255, 218, 0.08);
 }
 
-.contact-details {
-    display: flex;
-    justify-content: center;
-    gap: 12px 25px;
-    flex-wrap: wrap;
-    font-size: 20.6px;
-    color: var(--text-light);
-    margin-top: 40px;
-}
-
-.contact-details a {
-    /* Le stringhe lunghe non devono sfondare lo schermo. */
-    overflow-wrap: anywhere;
-}
-
-.contact-details a:hover {
-    color: var(--accent);
-}
-
-/* =========================
-FOOTER
-========================= */
-
 footer {
     text-align: center;
-
-    /* Punto di aggancio finale: senza, lo scatto sull'ultima sezione
-       rimbalzerebbe indietro e il fondo pagina resterebbe tagliato. */
     scroll-snap-align: end;
     padding: 40px 20px;
     color: var(--text-light);
-    font-size: 19.4px;
+    font-size: 1.18rem;
 }
 
-/* =========================
-RESPONSIVE
-========================= */
-
 @media (max-width: 768px) {
-
-    /* Il menu diventa un pannello laterale a scomparsa. */
     .nav-toggle {
         display: block;
-    }
-
-    /* Sul telefono il riferimento e' il pulsante del menu, a 22px. */
-    .crt-toggle {
-        top: 22px;
     }
 
     .nav-overlay {
@@ -791,7 +694,7 @@ RESPONSIVE
 
     nav ul {
         display: block;
-        font-size: 23px;
+        font-size: 1.39rem;
     }
 
     nav li+li {
@@ -811,7 +714,7 @@ RESPONSIVE
 
     .lang-switch button {
         padding: 6px 8px;
-        font-size: 23px;
+        font-size: 1.39rem;
     }
 
     #about {
@@ -821,10 +724,6 @@ RESPONSIVE
     header {
         min-height: 80vh;
         min-height: 80svh;
-
-        /* Il pulsante del menu e' fisso in alto a destra e arriva a 68px
-           (22 di distacco + 46 di altezza): senza questo spazio, su schermi
-           stretti il titolo dell'hero gli finisce sotto. */
         padding-top: 88px;
         padding-bottom: 40px;
     }
@@ -871,9 +770,7 @@ RESPONSIVE
     }
 }
 
-/* Telefoni piu' piccoli: piu' spazio utile in larghezza. */
 @media (max-width: 480px) {
-
     .container {
         width: 92%;
     }
@@ -895,19 +792,12 @@ RESPONSIVE
         padding: 24px 18px;
     }
 
-    .contact-details {
-        gap: 10px 18px;
-        margin-top: 30px;
-    }
-
     .links {
         gap: 12px 18px;
     }
 }
 
-/* Rispetta chi preferisce meno animazioni. */
 @media (prefers-reduced-motion: reduce) {
-
     html {
         scroll-behavior: auto;
         scroll-snap-type: none;
@@ -917,60 +807,12 @@ RESPONSIVE
         transition: none !important;
     }
 
+    body,
+    .caret {
+        animation: none;
+    }
+
     .cursor-glow {
         display: none;
     }
-}
-
-/* =========================
-INTERRUTTORE EFFETTI CRT
-========================= */
-
-/* Icona di un televisore a tubo catodico in alto a sinistra: attiva e
-   disattiva insieme scanlines e disturbo. Sopra gli effetti, cosi' resta
-   sempre leggibile e cliccabile. */
-.crt-toggle {
-    position: fixed;
-
-    /* Centro a 55px dall'alto, come le voci del menu (che partono da 35px
-       e sono alte circa 40px). */
-    top: 32px;
-    left: 3%;
-    z-index: 10000;
-    width: 46px;
-    height: 46px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background: none;
-    color: var(--text-light);
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-/* Come le voci del menu: grigio a riposo, verde-acqua al passaggio. */
-.crt-toggle:hover,
-.crt-toggle:focus-visible {
-    color: var(--accent);
-}
-
-.crt-toggle svg {
-    width: 26px;
-    height: 26px;
-}
-
-/* La barra obliqua compare solo con gli effetti spenti. */
-.crt-slash {
-    display: none;
-}
-
-.crt-off .crt-slash {
-    display: block;
-}
-
-.crt-off body::after,
-.crt-off #vhs-overlay {
-    display: none;
 }
